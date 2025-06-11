@@ -4,12 +4,11 @@ import random
 
 from pygame.rect import RectType, Rect
 
-from GameObject import GameObject
+from GameObjects.GameObject import GameObject
 
 
 class Fruit(GameObject):
-    def __init__(self, screen: Surface | SurfaceType, time_delta: int):
-        self._time_delta = time_delta
+    def __init__(self, screen: Surface | SurfaceType):
         self._screen = screen
         self._fruit_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
         self._radius = 10

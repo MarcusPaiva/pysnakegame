@@ -8,8 +8,7 @@ from GameObject import GameObject
 
 
 class Player(GameObject):
-    def __init__(self, screen:Surface | SurfaceType, time_delta:int):
-        self._time_delta = time_delta
+    def __init__(self, screen:Surface | SurfaceType):
         self._screen = screen
         self._player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
         self._speed = 300
@@ -40,9 +39,6 @@ class Player(GameObject):
     @property
     def sprite(self) -> Rect | RectType | None:
         return self._sprite
-
-    # def set_time_delta(self, dt:int):
-    #     self._time_delta = dt
 
     def __control_event(self):
         keys = pygame.key.get_pressed()
