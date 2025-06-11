@@ -3,9 +3,9 @@ from datetime import datetime, timedelta
 import pygame
 from pygame import Surface, SurfaceType
 
-from GameObjects.player import Player
-from fruit import Fruit
-from utils.game_collision import circle_collision_detections
+from src.GameObjects.player import Player
+from src.GameObjects.fruit import Fruit
+from src.utils.game_collision import circle_collision_detections
 
 
 def detect_player_fruit_collision(player:Player, fruit:Fruit) -> bool:

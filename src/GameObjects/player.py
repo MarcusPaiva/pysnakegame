@@ -4,7 +4,7 @@ import pygame
 from pygame import SurfaceType, Surface
 from pygame.rect import RectType, Rect
 
-from GameObject import GameObject
+from src.GameObjects.GameObject import GameObject
 
 
 class Player(GameObject):

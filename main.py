@@ -1,6 +1,6 @@
 import pygame
 
-from game_stage import Stage
+from src.game_stage import Stage
 
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))

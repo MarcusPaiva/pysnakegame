@@ -4,7 +4,7 @@ import random
 
 from pygame.rect import RectType, Rect
 
-from GameObjects.GameObject import GameObject
+from src.GameObjects.GameObject import GameObject
 
 
 class Fruit(GameObject):
