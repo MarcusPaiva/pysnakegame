@@ -20,11 +20,17 @@ class Player(GameObject):
         self._point = 1
         self._prev_points = [self._player_pos]
 
+    @property
+    def points(self):
+        return self._point
+
     def add_point(self):
         self._point += 1
 
-    def set_point(self, point:int):
+    @points.setter
+    def points(self, point:int):
         self._point = point
+
 
     @property
     def position(self) -> pygame.Vector2:

@@ -42,44 +42,91 @@ class Stage:
         self._fruit = Fruit(screen, self._game_bounds)
         self._collision = 0
         self._prev_time = datetime.now()
+        self._end_game = False
+        pygame.font.init()
+        self._main_font = pygame.font.SysFont(r'./src/assets/fonts/roboto/Roboto-Black', 80)
+        self._header_font = pygame.font.SysFont(r'./src/assets/fonts/roboto/Roboto-Black', 80)
+        self._paused_text = self._main_font.render('Paused', False, (255, 255, 255))
+        self._points_text = self._main_font.render(f'Points {self._player.points}', False, (255, 255, 255))
+        self._last_key_pressed = datetime.now()
+        pygame.key.set_repeat(50,200)
 
     def setup(self) -> None:
         """
         Stage setup.
         """
-        self._player.set_point(1)
+        self._player.points = 1
         self._fruit.generate()
 
-
-    def loop(self):
+    def __draw_score(self):
         """
-        Main game loop.
+        Draw score on header.
+        :return:
         """
-        while self._running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self._running = False
-            self._screen.fill("orange")
+        self._points_text = self._main_font.render(f'Points {self._player.points}', False, (255, 255, 255))
+        self._screen.blit(
+            self._points_text,
+            (self._game_header_bounds.initial_position.x + 10, self._game_header_bounds.initial_position.y)
+        )
 
-            tm = datetime.now() - self._prev_time
-            if tm > timedelta(milliseconds=100):
-                self._prev_time = datetime.now()
-                if not self._pause:
-                    self._player.move()
-            self._player.update()
-            self._fruit.update()
-            self._fruit.draw()
-            self._player.draw()
+    def __draw_header(self):
+        """
+        Draw header.
+        """
+        pygame.draw.rect(
+            self._screen,
+            "#596869", [
+                self._game_header_bounds.initial_position.x,
+                self._game_header_bounds.initial_position.y,
+                self._game_header_bounds.size.x,
+                self._game_header_bounds.size.y
+            ],
+            0,
+        )
+        self.__draw_score()
 
-            if detect_player_fruit_collision(self._player, self._fruit):
-                self._fruit.generate()
-                self._player.add_point()
+    def __draw_scenario(self):
+        """
+        Draw scenario.
+        """
+        pygame.draw.rect(
+            self._screen,
+            "#A41623", [
+                0,
+                self._game_bounds.initial_position.y - 25,
+                self._screen.get_width(),
+                self._screen.get_height()
+            ],
+            0,
+        )
+        pygame.draw.rect(
+            self._screen,
+            "black", [
+                self._game_bounds.initial_position.x-2,
+                self._game_bounds.initial_position.y-2,
+                self._game_bounds.size.x + 4,
+                self._game_bounds.size.y + 4
+            ],
+            0,
+        )
+        pygame.draw.rect(
+            self._screen,
+            "orange", [
+                self._game_bounds.initial_position.x,
+                self._game_bounds.initial_position.y,
+                self._game_bounds.size.x,
+                self._game_bounds.size.y
+            ],
+            0 ,
+        )
 
-            if self_collision(self._player):
-                self._collision += 1
-                self._pause = True
-                print(f"Colidiu! {self._collision}")
-
+    def __user_io_detection(self):
+        """
+        Main user detection action.
+        :return:
+        """
+        tm = datetime.now() - self._last_key_pressed
+        if tm > timedelta(milliseconds=200):
             if self._pause:
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_ESCAPE]:
@@ -128,6 +175,8 @@ class Stage:
                 if event.type == pygame.QUIT:
                     self._running = False
             self._screen.fill("orange")
+            self.__draw_header()
+            self.__draw_scenario()
             self.__in_game()
             self.__pause_menu()
 
