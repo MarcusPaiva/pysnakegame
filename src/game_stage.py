@@ -41,7 +41,6 @@ class Stage:
         self._player = Player(screen, self._game_bounds)
         self._fruit = Fruit(screen, self._game_bounds)
         self._collision = 0
-        self._prev_time = datetime.now()
         self._end_game = False
         pygame.font.init()
         pygame.mixer.init()
@@ -144,13 +143,9 @@ class Stage:
         """
         In game.
         """
-        tm = datetime.now() - self._prev_time
-        if tm > timedelta(milliseconds=100):
-            self._prev_time = datetime.now()
-            if not self._pause:
-                self._player.move()
-        self._player.update()
-        self._fruit.update()
+        if not self._pause:
+            self._player.update()
+            self._fruit.update()
         self._fruit.draw()
         self._player.draw()
 

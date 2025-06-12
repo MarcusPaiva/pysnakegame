@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from typing import List
 
 import pygame
@@ -13,7 +14,7 @@ class Player(GameObject):
         self._screen = screen
         self._bounds = game_bounds
         self._player_pos = pygame.Vector2(self._bounds.final_position.x / 2, self._bounds.final_position.y / 2)
-        self._speed = 300
+        self._speed = 3
         self._last_position = pygame.K_w
         self._radius = 10
         self._sprite = None
@@ -21,6 +22,7 @@ class Player(GameObject):
         self._prev_points = [self._player_pos]
         self._eat_effect = pygame.mixer.Sound(r'./src/assets/sounds/effects/eating.mp3')
         self._eat_effect.set_volume(0.7)
+        self._prev_time = datetime.now()
 
     @property
     def points(self):
@@ -30,6 +32,7 @@ class Player(GameObject):
         pygame.mixer.init()  # Initialize the mixer module.
         self._eat_effect.play(0)
         self._point += 1
+        self._speed += self._speed * (self._point / 1000)
 
     @points.setter
     def points(self, point:int):
@@ -88,9 +91,14 @@ class Player(GameObject):
 
     def update(self):
         self.__control_event()
+        self.__move_engine()
 
-    def move(self):
-        self.__move()
+    def __move_engine(self):
+        tm = datetime.now() - self._prev_time
+        speed = 200 * (5 / self._speed)
+        if tm > timedelta(milliseconds=speed):
+            self.__move()
+            self._prev_time = datetime.now()
 
     def draw(self):
         for point in self._prev_points:
