@@ -5,6 +5,7 @@ from pygame import Surface, SurfaceType
 
 from src.GameObjects.player import Player
 from src.GameObjects.fruit import Fruit
+from src.bounding_box import RectBoundingBox
 from src.utils.game_collision import circle_collision_detections
 
 
@@ -35,8 +36,10 @@ class Stage:
         self._pause = False
         self._clock = pygame.time.Clock()
         self._running = True
-        self._player = Player(screen)
-        self._fruit = Fruit(screen)
+        self._game_bounds = RectBoundingBox(30, 100, self._screen.get_width() - 30, self._screen.get_height() - 30)
+        self._game_header_bounds = RectBoundingBox(0, 0, self._screen.get_width(), self._game_bounds.initial_position.y - 25)
+        self._player = Player(screen, self._game_bounds)
+        self._fruit = Fruit(screen, self._game_bounds)
         self._collision = 0
         self._prev_time = datetime.now()
 

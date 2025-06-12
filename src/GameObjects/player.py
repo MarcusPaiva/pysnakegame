@@ -5,12 +5,14 @@ from pygame import SurfaceType, Surface
 from pygame.rect import RectType, Rect
 
 from src.GameObjects.GameObject import GameObject
+from src.bounding_box import BoundingBox
 
 
 class Player(GameObject):
-    def __init__(self, screen:Surface | SurfaceType):
+    def __init__(self, screen:Surface | SurfaceType, game_bounds:BoundingBox):
         self._screen = screen
-        self._player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+        self._bounds = game_bounds
+        self._player_pos = pygame.Vector2(self._bounds.final_position.x / 2, self._bounds.final_position.y / 2)
         self._speed = 300
         self._last_position = pygame.K_w
         self._radius = 10
@@ -52,23 +54,22 @@ class Player(GameObject):
             self._last_position = pygame.K_d
 
     def __move(self):
-        last = self._player_pos.copy()
         if self._last_position == pygame.K_w:
             self._player_pos.y -= self._radius * 2 + 3
-            if self._player_pos.y - self._radius < 0:
-                self._player_pos.y = self._screen.get_height() + self._radius
+            if self._player_pos.y - self._radius < self._bounds.initial_position.y:
+                self._player_pos.y = self._bounds.final_position.y + self._radius
         if self._last_position == pygame.K_s:
             self._player_pos.y += self._radius * 2 + 3
-            if self._player_pos.y + self._radius > self._screen.get_height():
-                self._player_pos.y = self._radius * 2
+            if self._player_pos.y + self._radius > self._bounds.final_position.y:
+                self._player_pos.y = self._bounds.initial_position.y + (self._radius * 2)
         if self._last_position == pygame.K_a:
             self._player_pos.x -= self._radius * 2 + 3
-            if self._player_pos.x - self._radius < 0:
-                self._player_pos.x = self._screen.get_width() - self._radius
+            if self._player_pos.x - self._radius < self._bounds.initial_position.x:
+                self._player_pos.x = self._bounds.final_position.x - self._radius
         if self._last_position == pygame.K_d:
             self._player_pos.x += self._radius * 2 + 3
-            if self._player_pos.x - self._radius > self._screen.get_width():
-                self._player_pos.x = self._radius
+            if self._player_pos.x - self._radius > self._bounds.final_position.x:
+                self._player_pos.x = self._bounds.initial_position.x + self._radius
 
         self._prev_points.append(self._player_pos.copy())
         if len(self._prev_points) > self._point:

@@ -5,12 +5,14 @@ import random
 from pygame.rect import RectType, Rect
 
 from src.GameObjects.GameObject import GameObject
+from src.bounding_box import BoundingBox
 
 
 class Fruit(GameObject):
-    def __init__(self, screen: Surface | SurfaceType):
+    def __init__(self, screen: Surface | SurfaceType, game_bounds:BoundingBox):
         self._screen = screen
-        self._fruit_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+        self._bounds = game_bounds
+        self._fruit_pos = pygame.Vector2(self._bounds.final_position.x / 2, self._bounds.final_position.y / 2)
         self._radius = 10
         self._sprite = None
 
@@ -27,8 +29,8 @@ class Fruit(GameObject):
         return self._sprite
 
     def generate(self):
-        self._fruit_pos.x = random.randint(self._radius, self._screen.get_width() - self._radius)
-        self._fruit_pos.y = random.randint(self._radius, self._screen.get_height() - self._radius)
+        self._fruit_pos.x = random.randint(self._radius, int(self._bounds.final_position.x) - self._radius)
+        self._fruit_pos.y = random.randint(self._radius, int(self._bounds.final_position.y) - self._radius)
 
     def update(self):
         pass
