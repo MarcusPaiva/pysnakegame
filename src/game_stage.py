@@ -60,6 +60,7 @@ class Stage:
         self._player.points = 1
         self._fruit.generate()
         pygame.mixer.music.play(-1, 0.0)
+        pygame.mixer.music.set_volume(0.3)
 
     def __draw_score(self):
         """
