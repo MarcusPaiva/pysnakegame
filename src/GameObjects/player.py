@@ -60,6 +60,7 @@ class Player(GameObject):
             self._last_position = pygame.K_d
 
     def __move(self):
+        # Why does this code create mental knots?
         if self._last_position == pygame.K_w:
             self._player_pos.y -= self._radius * 2 + 3
             if self._player_pos.y - self._radius < self._bounds.initial_position.y:
