@@ -63,7 +63,7 @@ class Player(GameObject):
         if self._last_position == pygame.K_w:
             self._player_pos.y -= self._radius * 2 + 3
             if self._player_pos.y - self._radius < self._bounds.initial_position.y:
-                self._player_pos.y = self._bounds.final_position.y + self._radius
+                self._player_pos.y = self._bounds.final_position.y - self._radius
         if self._last_position == pygame.K_s:
             self._player_pos.y += self._radius * 2 + 3
             if self._player_pos.y + self._radius > self._bounds.final_position.y:
