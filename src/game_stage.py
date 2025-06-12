@@ -44,12 +44,14 @@ class Stage:
         self._prev_time = datetime.now()
         self._end_game = False
         pygame.font.init()
+        pygame.mixer.init()
         self._main_font = pygame.font.SysFont(r'./src/assets/fonts/roboto/Roboto-Black', 80)
         self._header_font = pygame.font.SysFont(r'./src/assets/fonts/roboto/Roboto-Black', 80)
         self._paused_text = self._main_font.render('Paused', False, (255, 255, 255))
         self._points_text = self._main_font.render(f'Points {self._player.points}', False, (255, 255, 255))
         self._last_key_pressed = datetime.now()
         pygame.key.set_repeat(50,200)
+        pygame.mixer.music.load(r'./src/assets/sounds/music/main_song.mp3')
 
     def setup(self) -> None:
         """
@@ -57,6 +59,7 @@ class Stage:
         """
         self._player.points = 1
         self._fruit.generate()
+        pygame.mixer.music.play(-1, 0.0)
 
     def __draw_score(self):
         """

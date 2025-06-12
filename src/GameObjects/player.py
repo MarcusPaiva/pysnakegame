@@ -19,12 +19,15 @@ class Player(GameObject):
         self._sprite = None
         self._point = 1
         self._prev_points = [self._player_pos]
+        self._eat_effect = pygame.mixer.Sound(r'./src/assets/sounds/effects/eating.mp3')
 
     @property
     def points(self):
         return self._point
 
     def add_point(self):
+        pygame.mixer.init()  # Initialize the mixer module.
+        self._eat_effect.play(0)
         self._point += 1
 
     @points.setter

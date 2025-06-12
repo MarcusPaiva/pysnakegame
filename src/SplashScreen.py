@@ -42,8 +42,10 @@ class SplashScreen:
     def __init__(self, screen: Surface | SurfaceType):
         self._screen = screen
         self._logo = pygame.image.load(r'src/assets/images/logo/my_logo.png').convert_alpha()
+        self._intro_sound = pygame.mixer.Sound(r'./src/assets/sounds/effects/intro.mp3')
 
     def show(self):
         logo_rect = self._logo.get_rect(center=(self._screen.get_width() // 2, self._screen.get_height() // 2))
+        self._intro_sound.play()
         fade_logo(self._screen,self._logo,logo_rect, 2500)
 
