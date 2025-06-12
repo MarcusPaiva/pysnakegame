@@ -33,8 +33,8 @@ class Fruit(GameObject):
         Generate new point
         :return:
         """
-        self._fruit_pos.x = random.randint(self._bounds.initial_position.x + self._radius, int(self._bounds.final_position.x) - self._radius)
-        self._fruit_pos.y = random.randint(self._bounds.initial_position.y + self._radius, int(self._bounds.final_position.y) - self._radius)
+        self._fruit_pos.x = random.randint(int(self._bounds.initial_position.x) + self._radius, int(self._bounds.final_position.x) - self._radius)
+        self._fruit_pos.y = random.randint(int(self._bounds.initial_position.y) + self._radius, int(self._bounds.final_position.y) - self._radius)
 
     def update(self):
         pass
