@@ -1,10 +1,14 @@
+from datetime import datetime, timedelta
+
 import pygame
 from pygame import Surface, SurfaceType
 
+from src.game_engines.game_brief import GameBrief
 from src.game_engines.game_status import GameStatus
 from src.game_engines.screen_game import ScreenGame
 from src.screens.game_stage import Stage
 from src.screens.main_menu import MainMenu
+from src.utils.game_storage import GameBriefStorage
 
 
 class GameManagement:
@@ -18,6 +22,9 @@ class GameManagement:
         self._clock = pygame.time.Clock()
         self._current_screen = ScreenGame.main_menu
         self._game_status = GameStatus()
+        self._game_brief = GameBrief()
+        self._last_save = datetime.now()
+        self._game_storage = GameBriefStorage()
 
     def setup(self):
         """
@@ -25,6 +32,7 @@ class GameManagement:
         """
         self._main_menu.setup()
         self._game_stage.setup()
+        self._game_storage.load_brief()
 
     @property
     def current_screen(self) -> ScreenGame:
@@ -33,13 +41,6 @@ class GameManagement:
         :return: Current screen
         """
         return self._game_status.current_screen
-
-    # def set_current_screen(self, current_screen:ScreenGame):
-    #     """
-    #     Set current screen, this make game change screen.
-    #     :param current_screen: Current screen enum.
-    #     """
-    #     self._current_screen = current_screen
 
     def _process_screen(self):
         """
@@ -50,6 +51,15 @@ class GameManagement:
             self._main_menu.loop()
         else:
             self._game_stage.loop()
+
+    def save_event(self):
+        """
+        Save brief event.
+        """
+        tm = datetime.now() - self._last_save
+        if tm > timedelta(milliseconds=1000):
+            self._game_storage.save_brief()
+            self._last_save = datetime.now()
 
     def exit_game(self):
         """
@@ -65,6 +75,7 @@ class GameManagement:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.exit_game()
+            self.save_event()
             self._process_screen()
             pygame.display.flip()
             self._clock.tick(60)

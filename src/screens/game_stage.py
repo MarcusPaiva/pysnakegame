@@ -6,6 +6,7 @@ from pygame import Surface, SurfaceType
 from src.GameObjects.player import Player
 from src.GameObjects.fruit import Fruit
 from src.game_engines.bounding_box import RectBoundingBox
+from src.game_engines.game_brief import GameBrief
 from src.screens.game_screens import GameScreen
 from src.utils.game_collision import circle_collision_detections
 
@@ -49,6 +50,7 @@ class Stage(GameScreen):
         self._paused_text = self._main_font.render('Paused', False, (255, 255, 255))
         self._points_text = self._main_font.render(f'Points {self._player.points}', False, (255, 255, 255))
         self._last_key_pressed = datetime.now()
+        self._game_brief = GameBrief()
         pygame.key.set_repeat(50,200)
         pygame.mixer.music.load(r'./src/assets/sounds/music/main_song.mp3')
 
@@ -143,7 +145,7 @@ class Stage(GameScreen):
         """
         In game.
         """
-        if not self._pause:
+        if not self._pause and not self._end_game:
             self._player.update()
             self._fruit.update()
         self._fruit.draw()
@@ -153,7 +155,9 @@ class Stage(GameScreen):
             self._fruit.generate()
             self._player.add_point()
 
-        if self_collision(self._player):
+        if self_collision(self._player) and not self._end_game:
+            self._game_brief.add_global_points( self._player.points )
+            self._game_brief.increment_tries()
             self._collision += 1
             self._pause = True
             self._end_game = True
