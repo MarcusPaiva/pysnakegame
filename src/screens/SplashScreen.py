@@ -3,6 +3,9 @@ import sys
 import pygame
 from pygame import Surface, SurfaceType
 
+from src.screens.game_screens import GameScreen
+
+
 def fade_logo(screen, logo, logo_rect, duration=2000):
     """
     Fade effect to display images.
@@ -45,21 +48,30 @@ def fade_logo(screen, logo, logo_rect, duration=2000):
         screen.blit(alpha_surface, logo_rect)
         pygame.display.flip()
 
-class SplashScreen:
+class SplashScreen(GameScreen):
     def __init__(self, screen: Surface | SurfaceType):
         """
         Initialize splash screen.
         :param screen: Screen to show splash screen.
         """
         self._screen = screen
-        self._logo = pygame.image.load(r'src/assets/images/logo/my_logo.png').convert_alpha()
-        self._intro_sound = pygame.mixer.Sound(r'./src/assets/sounds/effects/intro.mp3')
+        self._logo = None
+        self.logo_rect = None
 
-    def show(self):
+
+    def setup(self) -> None:
+        """
+        Setup Splash Screen.
+        :return:
+        """
+        self._logo = pygame.image.load(r'src/assets/images/logo/my_logo.png').convert_alpha()
+        intro_sound = pygame.mixer.Sound(r'./src/assets/sounds/effects/intro.mp3')
+        intro_sound.play()
+        self.logo_rect = self._logo.get_rect(center=(self._screen.get_width() // 2, self._screen.get_height() // 2))
+
+    def loop(self) -> None:
         """
         Show splash screen event.
         """
-        logo_rect = self._logo.get_rect(center=(self._screen.get_width() // 2, self._screen.get_height() // 2))
-        self._intro_sound.play()
-        fade_logo(self._screen,self._logo,logo_rect, 2500)
+        fade_logo(self._screen,self._logo, self.logo_rect, 2500)
 

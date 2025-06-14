@@ -6,6 +6,7 @@ from pygame import Surface, SurfaceType
 from src.GameObjects.player import Player
 from src.GameObjects.fruit import Fruit
 from src.bounding_box import RectBoundingBox
+from src.screens.game_screens import GameScreen
 from src.utils.game_collision import circle_collision_detections
 
 
@@ -30,7 +31,7 @@ def self_collision(player:Player) -> bool:
             return circle_collision_detections(pos, player.radius, last, player.radius)
 
 
-class Stage:
+class Stage(GameScreen):
     def __init__(self, screen:Surface | SurfaceType):
         self._screen = screen
         self._pause = False
