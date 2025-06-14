@@ -3,7 +3,7 @@ from typing import Tuple
 import pygame
 from pygame import Surface, SurfaceType
 
-from src.bounding_box import RectBoundingBox
+from src.game_engines.bounding_box import RectBoundingBox
 
 
 def _mouse_click_detection() -> Tuple[int,int]:
