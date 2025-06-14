@@ -16,7 +16,7 @@ def _mouse_click_detection() -> Tuple[int,int]:
 
 class Button:
 
-    def __init__(self, screen:Surface | SurfaceType, start_x:int, start_y:int, margin:int, text:str, on_click = None, font_size:int = 40):
+    def __init__(self, screen:Surface | SurfaceType, start_x:int, start_y:int, text:str, margin:int=10, on_click = None, font_size:int = 40):
         """
         Button initializer.
         :param screen: Main screen instance.
@@ -140,7 +140,7 @@ if __name__ == "__main__":
     clock = pygame.time.Clock()
     def click():
         print("clicked!")
-    button = Button(screen, 200, 200, 10, "Click Test!", click )
+    button = Button(screen, 200, 200, "Click Test!", on_click=click )
     button.setup()
     while running:
         for event in pygame.event.get():
