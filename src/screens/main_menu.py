@@ -9,7 +9,7 @@ from src.game_engines.screen_game import ScreenGame
 class MainMenu:
     def __init__(self, screen: Surface | SurfaceType):
         self._screen = screen
-        self._main_font = None
+        self._game_title = None
         self._main_font = pygame.font.SysFont(r'./src/assets/fonts/roboto/Roboto-Black', 120)
         self._start_game_btn = Button(screen, 400, 400, "Start Game",on_click=self.__go_to_game)
         self._exit_game_game_btn = Button(screen, 500, 500, "Exit",on_click=self.__exit_game)
@@ -26,6 +26,7 @@ class MainMenu:
         self._start_game_btn.setup()
         self._exit_game_game_btn.hover_color("red")
         self._exit_game_game_btn.setup()
+        self._game_title: Surface = self._main_font.render(f'PySnake', False, (255, 255, 255))
 
     def _process(self):
         self._start_game_btn.update()
@@ -34,6 +35,10 @@ class MainMenu:
     def _draw(self):
         self._start_game_btn.draw()
         self._exit_game_game_btn.draw()
+        self._screen.blit(
+            self._game_title,
+            (370,150)
+        )
 
     def loop(self):
         self._screen.fill("orange")
