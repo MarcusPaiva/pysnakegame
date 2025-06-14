@@ -13,6 +13,10 @@ class GameStatus:
         self._current_screen = ScreenGame.main_menu
         self._running = True
 
+    @classmethod
+    def reset_instance(cls):
+        cls._instance = None
+
     @property
     def current_screen(self):
         return self._current_screen
