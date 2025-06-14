@@ -8,6 +8,10 @@ from src.screens.main_menu import MainMenu
 
 class GameManagement:
     def __init__(self, screen: Surface | SurfaceType):
+        """
+        Game Management initializer.
+        :param screen: Game window.
+        """
         self._main_menu = MainMenu(screen, self)
         self._game_stage = Stage(screen)
         self._running = True
@@ -15,25 +19,47 @@ class GameManagement:
         self._current_screen = ScreenGame.main_menu
 
     def setup(self):
+        """
+        Setup event.
+        """
         self._main_menu.setup()
         self._game_stage.setup()
 
+    @property
     def current_screen(self) -> ScreenGame:
+        """
+        Get current screen.
+        :return: Current screen
+        """
         return self._current_screen
 
     def set_current_screen(self, current_screen:ScreenGame):
+        """
+        Set current screen, this make game change screen.
+        :param current_screen: Current screen enum.
+        """
         self._current_screen = current_screen
 
     def _process_screen(self):
+        """
+        Process screen event.
+        :return:
+        """
         if self._current_screen == ScreenGame.main_menu:
             self._main_menu.loop()
         else:
             self._game_stage.loop()
 
     def exit_game(self):
+        """
+        Exit game.
+        """
         self._running = False
 
     def loop(self):
+        """
+        Main game loop.
+        """
         while self._running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
