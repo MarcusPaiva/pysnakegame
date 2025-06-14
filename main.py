@@ -1,28 +1,21 @@
 import pygame
 
-from src.GameManagement import GameManagement
+from src.game_management import GameManagement
 from src.screens.SplashScreen import SplashScreen
-# from src.screens.game_stage import Stage
-# from src.screens.main_menu import MainMenu
 
+# Pygame initializer window.
 pygame.init()
 screen = pygame.display.set_mode((1100, 720))
 pygame.display.set_caption("PySnake Game")
 
+# Splash screen
 splash = SplashScreen(screen)
 splash.setup()
 splash.loop()
 
+# Game Management
 game_management = GameManagement(screen)
 game_management.setup()
 game_management.loop()
-
-# main_menu = MainMenu(screen)
-# main_menu.setup()
-# main_menu.loop()
-
-# stage = Stage(screen)
-# stage.setup()
-# stage.loop()
 
 pygame.quit()
