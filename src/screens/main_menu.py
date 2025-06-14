@@ -1,12 +1,43 @@
+import pygame
 from pygame import Surface, SurfaceType
+
+from src.game_components.button import Button
+from src.screen_game import ScreenGame
 
 
 class MainMenu:
-    def __init__(self, screen: Surface | SurfaceType):
+    def __init__(self, screen: Surface | SurfaceType, game_management):
         self._screen = screen
+        self._main_font = None
+        self._main_font = pygame.font.SysFont(r'./src/assets/fonts/roboto/Roboto-Black', 120)
+        self._start_game_btn = Button(screen, 400, 400, "Start Game",on_click=self.__go_to_game)
+        self._exit_game_game_btn = Button(screen, 500, 500, "Exit",on_click=self.__exit_game)
+        self._game_management = game_management
+
+    def change_screen(self, screen_name):
+        self._game_management.set_current_screen(screen_name)
+
+    def __go_to_game(self):
+        self.change_screen(ScreenGame.game_stage)
+
+    def __exit_game(self):
+        self._game_management.exit_game()
 
     def setup(self):
-        pass
+        self._start_game_btn.hover_color("#596869")
+        self._start_game_btn.setup()
+        self._exit_game_game_btn.hover_color("red")
+        self._exit_game_game_btn.setup()
+
+    def _process(self):
+        self._start_game_btn.update()
+        self._exit_game_game_btn.update()
+
+    def _draw(self):
+        self._start_game_btn.draw()
+        self._exit_game_game_btn.draw()
 
     def loop(self):
-        pass
+        self._screen.fill("orange")
+        self._process()
+        self._draw()

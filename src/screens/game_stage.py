@@ -35,7 +35,6 @@ class Stage(GameScreen):
     def __init__(self, screen:Surface | SurfaceType):
         self._screen = screen
         self._pause = False
-        self._clock = pygame.time.Clock()
         self._running = True
         self._game_bounds = RectBoundingBox(30, 100, self._screen.get_width() - 30, self._screen.get_height() - 30)
         self._game_header_bounds = RectBoundingBox(0, 0, self._screen.get_width(), self._game_bounds.initial_position.y - 25)
@@ -169,16 +168,8 @@ class Stage(GameScreen):
         """
         Main game loop.
         """
-        while self._running:
-            self.__user_io_detection()
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self._running = False
-            self._screen.fill("orange")
-            self.__draw_header()
-            self.__draw_scenario()
-            self.__in_game()
-            self.__pause_menu()
-
-            pygame.display.flip()
-            self._clock.tick(60)
+        self._screen.fill("orange")
+        self.__draw_header()
+        self.__draw_scenario()
+        self.__in_game()
+        self.__pause_menu()
