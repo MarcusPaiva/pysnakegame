@@ -8,6 +8,7 @@ from src.GameObjects.fruit import Fruit
 from src.game_components.modal import Modal, Options
 from src.game_engines.bounding_box import RectBoundingBox
 from src.game_engines.game_brief import GameBrief
+from src.game_engines.game_input import Keyboard, Keys
 from src.game_engines.game_status import GameStatus
 from src.game_engines.screen_game import ScreenGame
 from src.screens.game_screens import GameScreen
@@ -53,10 +54,12 @@ class Stage(GameScreen):
         self._header_font = pygame.font.SysFont(r'./src/assets/fonts/roboto/Roboto-Black', 80)
         self._paused_text = self._main_font.render('Paused', False, (255, 255, 255))
         self._points_text = self._main_font.render(f'Points {self._player.points}', False, (255, 255, 255))
-        self._last_key_pressed = datetime.now()
+        self._last_key_pressed = []
         self._game_brief = GameBrief()
+        self._game_status = GameStatus()
         pygame.key.set_repeat(50,200)
         pygame.mixer.music.load(r'./src/assets/sounds/music/main_song.mp3')
+        self._game_keyboard = Keyboard()
 
     def reset(self):
         self._collision = 0
@@ -176,16 +179,19 @@ class Stage(GameScreen):
         Main user detection action.
         :return:
         """
-        tm = datetime.now() - self._last_key_pressed
-        if tm > timedelta(milliseconds=200):
-            if self._pause:
-                keys = pygame.key.get_pressed()
-                if keys[pygame.K_ESCAPE]:
-                    self._pause = False
-            else:
-                keys = pygame.key.get_pressed()
-                if keys[pygame.K_ESCAPE]:
+        pause_detection = True
+        if self._game_keyboard.user_is_pressing:
+            keys = self._game_keyboard.current_keys_pressing
+            if not self._pause and Keys.escape not in self._last_key_pressed and pause_detection:
+                if Keys.escape in keys:
                     self._pause = True
+                    pause_detection = False
+            if self._pause and Keys.escape not in self._last_key_pressed and pause_detection:
+                if Keys.escape in keys:
+                    self._pause = False
+            self._last_key_pressed = keys
+        else:
+            self._last_key_pressed = []
 
     def __in_game(self):
         """
@@ -224,7 +230,9 @@ class Stage(GameScreen):
         """
         Main game loop.
         """
+        self._game_keyboard.detect_buttons()
         self._screen.fill("orange")
+        self.__user_io_detection()
         self.__draw_header()
         self.__draw_scenario()
         self.__in_game()

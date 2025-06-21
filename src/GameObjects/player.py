@@ -7,6 +7,7 @@ from pygame.rect import RectType, Rect
 
 from src.GameObjects.GameObject import GameObject
 from src.game_engines.bounding_box import BoundingBox
+from src.game_engines.game_input import Keyboard, Keys
 
 
 class Player(GameObject):
@@ -23,6 +24,7 @@ class Player(GameObject):
         self._eat_effect = pygame.mixer.Sound(r'./src/assets/sounds/effects/eating.mp3')
         self._eat_effect.set_volume(0.7)
         self._prev_time = datetime.now()
+        self._game_keyboard = Keyboard()
 
     @property
     def points(self):
@@ -56,14 +58,15 @@ class Player(GameObject):
         return self._sprite
 
     def __control_event(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_w] and not self._last_position == pygame.K_w:
+        self._game_keyboard.detect_buttons()
+        keys = self._game_keyboard.current_keys_pressing
+        if Keys.key_up in keys and not self._last_position == pygame.K_w:
             self._last_position = pygame.K_w
-        if keys[pygame.K_s] and not self._last_position == pygame.K_s:
+        if Keys.key_down in keys and not self._last_position == pygame.K_s:
             self._last_position = pygame.K_s
-        if keys[pygame.K_a] and not self._last_position == pygame.K_a:
+        if Keys.key_left in keys and not self._last_position == pygame.K_a:
             self._last_position = pygame.K_a
-        if keys[pygame.K_d] and not self._last_position == pygame.K_d:
+        if Keys.key_right in keys and not self._last_position == pygame.K_d:
             self._last_position = pygame.K_d
 
     def __move(self):
