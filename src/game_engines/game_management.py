@@ -47,6 +47,9 @@ class GameManagement:
         Process screen event.
         :return:
         """
+        if self._game_status.change_screen_trigger:
+            self._game_stage.reset()
+            self._game_status.dismiss_change_screen_trigger()
         if self.current_screen == ScreenGame.main_menu:
             self._main_menu.loop()
         else:

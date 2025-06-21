@@ -5,8 +5,11 @@ from pygame import Surface, SurfaceType
 
 from src.GameObjects.player import Player
 from src.GameObjects.fruit import Fruit
+from src.game_components.modal import Modal, Options
 from src.game_engines.bounding_box import RectBoundingBox
 from src.game_engines.game_brief import GameBrief
+from src.game_engines.game_status import GameStatus
+from src.game_engines.screen_game import ScreenGame
 from src.screens.game_screens import GameScreen
 from src.utils.game_collision import circle_collision_detections
 
@@ -36,11 +39,12 @@ class Stage(GameScreen):
     def __init__(self, screen:Surface | SurfaceType):
         self._screen = screen
         self._pause = False
-        self._running = True
         self._game_bounds = RectBoundingBox(30, 100, self._screen.get_width() - 30, self._screen.get_height() - 30)
         self._game_header_bounds = RectBoundingBox(0, 0, self._screen.get_width(), self._game_bounds.initial_position.y - 25)
         self._player = Player(screen, self._game_bounds)
         self._fruit = Fruit(screen, self._game_bounds)
+        self._modal_game_over = Modal(self._screen, 250, 150, "Game Over")
+        self._modal_pause = Modal(self._screen, 250, 150, "Paused")
         self._collision = 0
         self._end_game = False
         pygame.font.init()
@@ -54,6 +58,23 @@ class Stage(GameScreen):
         pygame.key.set_repeat(50,200)
         pygame.mixer.music.load(r'./src/assets/sounds/music/main_song.mp3')
 
+    def reset(self):
+        self._collision = 0
+        self._player = Player(self._screen, self._game_bounds)
+        self._fruit.generate()
+        self._end_game = False
+        self._pause = False
+
+    def __continue_option(self):
+        """
+        Continue event.
+        :return:
+        """
+        self._pause = False
+
+    def __try_again_option(self):
+        self.reset()
+
     def setup(self) -> None:
         """
         Stage setup.
@@ -62,6 +83,31 @@ class Stage(GameScreen):
         self._fruit.generate()
         pygame.mixer.music.play(-1, 0.0)
         pygame.mixer.music.set_volume(0.3)
+        self._modal_game_over.setup()
+        self._modal_game_over.show(False)
+        self.__setup_modal_game_over_options()
+        self._modal_pause.setup()
+        self._modal_pause.show(False)
+        self.__setup_modal_pause_options()
+
+    def __main_menu_option(self):
+        self._player = Player(self._screen, self._game_bounds)
+        self._fruit = Fruit(self._screen, self._game_bounds)
+        self._game_status.current_screen = ScreenGame.main_menu
+
+    def __setup_modal_game_over_options(self):
+        options = [
+            Options("Try again", self.__try_again_option, "green", "white"),
+            Options("Main Menu", self.__main_menu_option, "red", "white"),
+        ]
+        self._modal_game_over.add_options(options)
+
+    def __setup_modal_pause_options(self):
+        options = [
+            Options("Continue", self.__continue_option, "green", "white"),
+            Options("Main Menu", self.__main_menu_option, "red", "white"),
+        ]
+        self._modal_pause.add_options(options)
 
     def __draw_score(self):
         """
@@ -164,8 +210,14 @@ class Stage(GameScreen):
             print(f"Colidiu! {self._collision}")
 
     def __pause_menu(self):
-        if self._pause:
-            self._screen.blit(self._paused_text, (self._screen.get_width() / 2, self._screen.get_height() / 2))
+        self._modal_pause.show(self._pause)
+        self._modal_pause.update()
+        self._modal_pause.draw()
+
+    def __game_over_menu(self):
+        self._modal_game_over.show(self._end_game)
+        self._modal_game_over.update()
+        self._modal_game_over.draw()
 
 
     def loop(self):
@@ -177,3 +229,4 @@ class Stage(GameScreen):
         self.__draw_scenario()
         self.__in_game()
         self.__pause_menu()
+        self.__game_over_menu()

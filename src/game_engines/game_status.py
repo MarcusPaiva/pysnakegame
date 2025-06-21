@@ -12,6 +12,14 @@ class GameStatus:
     def __init__(self):
         self._current_screen = ScreenGame.main_menu
         self._running = True
+        self._change_screen_trigger = False
+
+    def dismiss_change_screen_trigger(self):
+        self._change_screen_trigger = False
+
+    @property
+    def change_screen_trigger(self):
+        return self._change_screen_trigger
 
     @classmethod
     def reset_instance(cls):
@@ -23,6 +31,7 @@ class GameStatus:
 
     @current_screen.setter
     def current_screen(self, destination_screen:ScreenGame):
+        self._change_screen_trigger = True
         self._current_screen = destination_screen
 
     def close_game(self):

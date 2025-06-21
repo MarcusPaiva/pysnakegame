@@ -1,3 +1,4 @@
+from logging import disable
 from typing import Tuple
 
 import pygame
@@ -40,9 +41,13 @@ class Button:
         self._hover = False
         self._button_text = None
         self._text_position = [0,0]
+        self._disable = False
+
+    def disable(self, value:bool):
+        self._disable = value
 
     def setup(self):
-        self._main_font = pygame.font.SysFont(r'./src/assets/fonts/roboto/Roboto-Black', 80)
+        self._main_font = pygame.font.SysFont(r'./src/assets/fonts/roboto/Roboto-Black', self._font_size)
 
     def _process_button_box(self):
         """Process button box"""
@@ -74,7 +79,7 @@ class Button:
         self._process_button_box()
         mouse_click = _mouse_click_detection()
         if mouse_click is not None and self.__click_inside_button_detection(mouse_click[0],mouse_click[1]):
-            if self._on_click is not None:
+            if self._on_click is not None and not self._disable:
                 self._on_click()
         self._hover = self.__mouse_hove_detection()
         self.__process_button_text()
