@@ -32,8 +32,8 @@ def self_collision(player:Player) -> bool:
     """
     last = player.position
     if len(player.positions) > 1:
-        for idx, pos in enumerate(player.positions[:-1]):
-            return circle_collision_detections(pos, player.radius, last, player.radius)
+        if last in player.positions[:-1]:
+            return True
 
 
 class Stage(GameScreen):
