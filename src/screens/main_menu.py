@@ -10,7 +10,7 @@ class MainMenu:
     def __init__(self, screen: Surface | SurfaceType):
         self._screen = screen
         self._game_title = None
-        self._main_font = pygame.font.SysFont(r'./src/assets/fonts/roboto/Roboto-Black', 120)
+        self._main_font = pygame.font.Font(r'./src/assets/fonts/roboto/Roboto-Black.ttf', 120)
         self._start_game_btn = Button(screen, 400, 400, "Start Game",on_click=self.__go_to_game)
         self._exit_game_game_btn = Button(screen, 500, 500, "Exit",on_click=self.__exit_game)
         self._game_status = GameStatus()

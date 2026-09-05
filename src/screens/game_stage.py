@@ -34,6 +34,7 @@ def self_collision(player:Player) -> bool:
     if len(player.positions) > 1:
         if last in player.positions[:-1]:
             return True
+    return False
 
 
 class Stage(GameScreen):
@@ -50,8 +51,8 @@ class Stage(GameScreen):
         self._end_game = False
         pygame.font.init()
         pygame.mixer.init()
-        self._main_font = pygame.font.SysFont(r'./src/assets/fonts/roboto/Roboto-Black', 80)
-        self._header_font = pygame.font.SysFont(r'./src/assets/fonts/roboto/Roboto-Black', 80)
+        self._main_font = pygame.font.Font(r'./src/assets/fonts/roboto/Roboto-Black.ttf', 80)
+        self._header_font = pygame.font.Font(r'./src/assets/fonts/roboto/Roboto-Black.ttf', 80)
         self._paused_text = self._main_font.render('Paused', False, (255, 255, 255))
         self._points_text = self._main_font.render(f'Points {self._player.points}', False, (255, 255, 255))
         self._last_key_pressed = []

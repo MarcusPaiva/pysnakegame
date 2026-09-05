@@ -47,7 +47,7 @@ class Button:
         self._disable = value
 
     def setup(self):
-        self._main_font = pygame.font.SysFont(r'./src/assets/fonts/roboto/Roboto-Black', self._font_size)
+        self._main_font = pygame.font.Font(r'./src/assets/fonts/roboto/Roboto-Black.ttf', self._font_size)
 
     def _process_button_box(self):
         """Process button box"""

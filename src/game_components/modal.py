@@ -53,7 +53,7 @@ class Modal:
         """
         Setup event.
         """
-        self._main_font = pygame.font.SysFont(r'./src/assets/fonts/roboto/Roboto-Black', self._font_size)
+        self._main_font = pygame.font.Font(r'./src/assets/fonts/roboto/Roboto-Black.ttf', self._font_size)
 
     def add_options(self, options: List[Options]):
         """
