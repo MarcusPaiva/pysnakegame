@@ -17,21 +17,21 @@ class Options:
 
 
 class Modal:
-    def __init__(self, screen: Surface | SurfaceType, start_x: int, start_y: int, text: str, end_x: int = 600,
-                 end_y=400, margin: int = 10, font_size: int = 40, show=True):
+    def __init__(self, screen: Surface | SurfaceType, text: str, width_ratio: float = 0.6,
+                 height_ratio: float = 0.55, margin: int = 10, font_size: int = 40, show=True):
         """
         Modal initializer.
         :param screen: Main screen instance.
-        :param start_x: Axis x start position.
-        :param start_y: Axis y end position.
         :param text: Text message inside modal to display.
+        :param width_ratio: Modal width as a fraction of the screen's current width.
+        :param height_ratio: Modal height as a fraction of the screen's current height.
         :param font_size: Text font size.
         """
         self._screen = screen
         self._margin = margin
-        self._x = start_x
-        self._y = start_y
-        self._main_bounding_box = RectBoundingBox(start_x, start_y, start_x + end_x, start_y + end_y)
+        self._width_ratio = width_ratio
+        self._height_ratio = height_ratio
+        self._main_bounding_box = self.__compute_bounding_box()
         self._text = text
         self._font_size = font_size
         self._main_font = None
@@ -40,6 +40,20 @@ class Modal:
         self._options: List[Options] = []
         self._show = show
         self._options_buttons: List[Button] = []
+
+    def __compute_bounding_box(self) -> RectBoundingBox:
+        """
+        Compute a bounding box centered on the screen, sized proportionally
+        to the screen's current dimensions.
+        :return: Centered RectBoundingBox.
+        """
+        screen_width = self._screen.get_width()
+        screen_height = self._screen.get_height()
+        width = screen_width * self._width_ratio
+        height = screen_height * self._height_ratio
+        x0 = (screen_width - width) / 2
+        y0 = (screen_height - height) / 2
+        return RectBoundingBox(x0, y0, x0 + width, y0 + height)
 
     def show(self, value:bool):
         """
@@ -67,6 +81,7 @@ class Modal:
         """
         Update event.
         """
+        self._main_bounding_box = self.__compute_bounding_box()
         self.__process_button_text()
         self.__process_options()
 
@@ -101,7 +116,7 @@ class Modal:
         self._button_text: Surface = self._main_font.render(f'{self._text}', False, (255, 255, 255))
         button_text_size = self._button_text.get_size()
         text_center_x = button_text_size[0] / 2
-        text_center_y = self._main_bounding_box.final_position.y / 4
+        text_center_y = self._main_bounding_box.size.y * 0.35
         center = self._main_bounding_box.center
         self._text_position = [center.x - text_center_x, center.y - text_center_y]
 
@@ -146,7 +161,7 @@ if __name__ == "__main__":
     pygame.display.set_caption("User Button test")
     running = True
     clock = pygame.time.Clock()
-    modal = Modal(screen, 250, 150, "Game Over")
+    modal = Modal(screen, "Game Over")
     def confirm():
         print("Confirm")
 

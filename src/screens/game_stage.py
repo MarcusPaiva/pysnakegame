@@ -45,8 +45,8 @@ class Stage(GameScreen):
         self._game_header_bounds = RectBoundingBox(0, 0, self._screen.get_width(), self._game_bounds.initial_position.y - 25)
         self._player = Player(screen, self._game_bounds)
         self._fruit = Fruit(screen, self._game_bounds)
-        self._modal_game_over = Modal(self._screen, 250, 150, "Game Over")
-        self._modal_pause = Modal(self._screen, 250, 150, "Paused")
+        self._modal_game_over = Modal(self._screen, "Game Over")
+        self._modal_pause = Modal(self._screen, "Paused")
         self._collision = 0
         self._end_game = False
         pygame.font.init()
