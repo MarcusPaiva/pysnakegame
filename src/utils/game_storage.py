@@ -11,22 +11,22 @@ class GameBriefStorage:
         self.game_brief = GameBrief()
 
     def file_open(self):
-        self._file = open(_GAME_BRIEF_FILE, "w+")
+        self._file = open(_GAME_BRIEF_FILE, "a+")
 
     def load_brief(self):
         if self._file is None or self._file.closed:
             self.file_open()
+        self._file.seek(0)
         content = self._file.read()
         if content.strip() == "":
             content = "{}"
         brief_data:dict = json.loads(content)
         self.game_brief.global_points = brief_data.get('global_points',0)
-        self.game_brief.global_points = brief_data.get('tries',0)
+        self.game_brief.tries = brief_data.get('tries',0)
         self._file.close()
 
     def save_brief(self):
-        if self._file is None or self._file.closed:
-            self.file_open()
+        self._file = open(_GAME_BRIEF_FILE, "w")
 
         brief_data = {
             "global_points": self.game_brief.global_points,
