@@ -31,7 +31,6 @@ class Player(GameObject):
         return self._point
 
     def add_point(self):
-        pygame.mixer.init()  # Initialize the mixer module.
         self._eat_effect.play(0)
         self._point += 1
         self._speed += self._speed * (self._point / 1000)
@@ -78,14 +77,14 @@ class Player(GameObject):
         if self._last_position == pygame.K_s:
             self._player_pos.y += self._radius * 2 + 3
             if self._player_pos.y + self._radius > self._bounds.final_position.y:
-                self._player_pos.y = self._bounds.initial_position.y + (self._radius * 2)
+                self._player_pos.y = self._bounds.initial_position.y + self._radius
         if self._last_position == pygame.K_a:
             self._player_pos.x -= self._radius * 2 + 3
             if self._player_pos.x - self._radius < self._bounds.initial_position.x:
                 self._player_pos.x = self._bounds.final_position.x - self._radius
         if self._last_position == pygame.K_d:
             self._player_pos.x += self._radius * 2 + 3
-            if self._player_pos.x - self._radius > self._bounds.final_position.x:
+            if self._player_pos.x + self._radius > self._bounds.final_position.x:
                 self._player_pos.x = self._bounds.initial_position.x + self._radius
 
         self._prev_points.append(self._player_pos.copy())
