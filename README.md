@@ -14,6 +14,14 @@ pip install -r requirements.txt
 python main.py
 ````
 
+## Running tests
+Install the dev dependencies (includes pytest) and run:
+````commandline
+pip install -r requirements-dev.txt
+pytest
+````
+Tests run headlessly (no window opens) using pygame's dummy video/audio drivers.
+
 ## Initial goals
 
 Create intro;
