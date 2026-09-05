@@ -7,9 +7,13 @@ class GameStatus:
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
             cls._instance = super(GameStatus, cls).__new__(cls)
+            cls._instance._initialized = False
         return cls._instance
 
     def __init__(self):
+        if self._initialized:
+            return
+        self._initialized = True
         self._current_screen = ScreenGame.main_menu
         self._running = True
         self._change_screen_trigger = False

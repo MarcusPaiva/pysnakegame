@@ -4,9 +4,13 @@ class GameBrief:
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
             cls._instance = super(GameBrief, cls).__new__(cls)
+            cls._instance._initialized = False
         return cls._instance
 
     def __init__(self):
+        if self._initialized:
+            return
+        self._initialized = True
         self._global_points = 0
         self._tries = 0
 
