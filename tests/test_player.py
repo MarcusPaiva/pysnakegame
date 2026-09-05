@@ -17,12 +17,8 @@ def _move(player):
     player._Player__move()
 
 
-def test_starts_at_half_of_final_bound(player, game_bounds):
-    # Documents current behavior: Player uses final_position / 2, not
-    # game_bounds.center, so the spawn point is not exactly centered
-    # when initial_position isn't (0, 0). See README/notes for details.
-    expected = pygame.Vector2(game_bounds.final_position.x / 2, game_bounds.final_position.y / 2)
-    assert player.position == expected
+def test_starts_centered_in_bounds(player, game_bounds):
+    assert player.position == game_bounds.center
 
 
 def test_add_point_increments_score_and_speed(player):

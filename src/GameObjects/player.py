@@ -14,7 +14,7 @@ class Player(GameObject):
     def __init__(self, screen:Surface | SurfaceType, game_bounds:BoundingBox):
         self._screen = screen
         self._bounds = game_bounds
-        self._player_pos = pygame.Vector2(self._bounds.final_position.x / 2, self._bounds.final_position.y / 2)
+        self._player_pos = self._bounds.center
         self._speed = 3
         self._last_position = pygame.K_w
         self._radius = 10
