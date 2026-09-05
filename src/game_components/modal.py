@@ -87,26 +87,39 @@ class Modal:
 
     def __process_options(self):
         """
-        Process options buttons in modal.
+        Process options buttons in modal, laid out left-to-right with equal
+        gaps between them and equal outer margins to the box's edges,
+        regardless of how wide each button's text makes it.
         :return:
         """
         self._options_buttons = []
-        x,y = self._main_bounding_box.initial_position.xy
-        end_x = self._main_bounding_box.final_position.x
+        if not self._options:
+            return
+
+        x, y = self._main_bounding_box.initial_position.xy
         end_y = y + (self._main_bounding_box.size.y * 0.8)
         size_x = self._main_bounding_box.size.x
-        x_step = 0
-        if len(self._options) > 0:
-         x_step = (size_x / len(self._options)) + self._margin
-        for idx, option in enumerate(self._options):
-            current_step = x + (x_step * idx) + (end_x * 0.12)
-            btn = Button(self._screen,current_step, end_y, option.text,on_click=option.on_click)
+
+        buttons = []
+        for option in self._options:
+            btn = Button(self._screen, 0, end_y, option.text, margin=self._margin, on_click=option.on_click)
             btn.hover_color(option.hover_color)
             btn.background_color(option.background_color)
             btn.disable(not self._show)
             btn.setup()
+            buttons.append(btn)
+
+        widths = [btn.content_size().x for btn in buttons]
+        gap = self._margin
+        total_width = sum(widths) + gap * (len(buttons) - 1)
+        outer_margin = max((size_x - total_width) / 2, 0)
+
+        current_left = x + outer_margin
+        for btn, width in zip(buttons, widths):
+            btn.set_position(current_left + self._margin, end_y)
             btn.update()
             self._options_buttons.append(btn)
+            current_left += width + gap
 
     def __process_button_text(self):
         """

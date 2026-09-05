@@ -49,6 +49,24 @@ class Button:
     def setup(self):
         self._main_font = pygame.font.Font(r'./src/assets/fonts/roboto/Roboto-Black.ttf', self._font_size)
 
+    def set_position(self, start_x: float, start_y: float):
+        """
+        Reposition the button without changing its text/size.
+        :param start_x: Axis x start position.
+        :param start_y: Axis y start position.
+        """
+        self._x = start_x
+        self._y = start_y
+
+    def content_size(self) -> pygame.Vector2:
+        """
+        Measure the button's rendered size (text plus margin), independent
+        of its position. Requires setup() to have been called first.
+        :return: Vector2 with the button's (width, height).
+        """
+        text_width, text_height = self._main_font.size(f"{self._text}")
+        return pygame.Vector2(text_width + self._margin * 2, text_height + self._margin * 2)
+
     def _process_button_box(self):
         """Process button box"""
         x, y = self._main_font.size(f"{self._text}")
