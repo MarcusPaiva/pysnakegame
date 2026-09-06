@@ -7,6 +7,7 @@ from pygame.rect import RectType, Rect
 
 from game_engine.GameObject import GameObject
 from game_engine.bounding_box import BoundingBox
+from game_engine.game_artfacts_2d import Circle
 from game_engine.inputs.game_input import Keyboard, Keys
 from game_engine.sound import SoundEffect
 
@@ -104,5 +105,5 @@ class Player(GameObject):
 
     def draw(self):
         for point in self._prev_points:
-            self._sprite = pygame.draw.circle(self._screen, "black", point, self._radius+1)
-            self._sprite = pygame.draw.circle(self._screen, "red", point, self._radius)
+            self._sprite = Circle(point.x, point.y, self._radius + 1).set_fill_color("black").render(self._screen)
+            self._sprite = Circle(point.x, point.y, self._radius).set_fill_color("red").render(self._screen)

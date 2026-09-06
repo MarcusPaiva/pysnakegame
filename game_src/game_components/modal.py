@@ -7,6 +7,7 @@ from pygame import Surface, SurfaceType
 from game_src.game_components.button import Button
 from game_engine.bounding_box import RectBoundingBox
 from game_engine.font import GameFont
+from game_engine.game_artfacts_2d import Rect
 
 
 @dataclass
@@ -141,27 +142,9 @@ class Modal:
         Draw event.
         """
         if self._show:
-            pygame.draw.rect(
-                self._screen,
-                self._margin_color, [
-                    self._main_bounding_box.initial_position.x,
-                    self._main_bounding_box.initial_position.y,
-                    self._main_bounding_box.size.x,
-                    self._main_bounding_box.size.y
-                ],
-                0,
-            )
-
-            pygame.draw.rect(
-                self._screen,
-                self._background_color, [
-                    self._main_bounding_box.initial_position.x,
-                    self._main_bounding_box.initial_position.y,
-                    self._main_bounding_box.size.x,
-                    self._main_bounding_box.size.y
-                ],
-                0,
-            )
+            box = self._main_bounding_box
+            Rect(box.initial_position.x, box.initial_position.y, box.size.x, box.size.y).set_fill_color(self._margin_color).render(self._screen)
+            Rect(box.initial_position.x, box.initial_position.y, box.size.x, box.size.y).set_fill_color(self._background_color).render(self._screen)
 
             self._screen.blit(
                 self._button_text,

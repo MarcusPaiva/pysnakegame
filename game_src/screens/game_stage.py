@@ -6,6 +6,7 @@ from game_src.GameObjects.fruit import Fruit
 from game_src.game_components.modal import Modal, Options
 from game_engine.bounding_box import RectBoundingBox
 from game_engine.font import GameFont
+from game_engine.game_artfacts_2d import Rect
 from game_engine.game_brief import GameBrief
 from game_engine.inputs.game_input import Keyboard, Keys
 from game_engine.sound import Music
@@ -129,52 +130,25 @@ class Stage(GameScreen):
         """
         Draw header.
         """
-        pygame.draw.rect(
-            self._screen,
-            "#596869", [
-                self._game_header_bounds.initial_position.x,
-                self._game_header_bounds.initial_position.y,
-                self._game_header_bounds.size.x,
-                self._game_header_bounds.size.y
-            ],
-            0,
-        )
+        header = self._game_header_bounds
+        Rect(header.initial_position.x, header.initial_position.y, header.size.x, header.size.y).set_fill_color("#596869").render(self._screen)
         self.__draw_score()
 
     def __draw_scenario(self):
         """
         Draw scenario.
         """
-        pygame.draw.rect(
-            self._screen,
-            "#A41623", [
-                0,
-                self._game_bounds.initial_position.y - 25,
-                self._screen.get_width(),
-                self._screen.get_height()
-            ],
-            0,
-        )
-        pygame.draw.rect(
-            self._screen,
-            "black", [
-                self._game_bounds.initial_position.x-2,
-                self._game_bounds.initial_position.y-2,
-                self._game_bounds.size.x + 4,
-                self._game_bounds.size.y + 4
-            ],
-            0,
-        )
-        pygame.draw.rect(
-            self._screen,
-            "orange", [
-                self._game_bounds.initial_position.x,
-                self._game_bounds.initial_position.y,
-                self._game_bounds.size.x,
-                self._game_bounds.size.y
-            ],
-            0 ,
-        )
+        Rect(
+            0, self._game_bounds.initial_position.y - 25, self._screen.get_width(), self._screen.get_height()
+        ).set_fill_color("#A41623").render(self._screen)
+        Rect(
+            self._game_bounds.initial_position.x - 2, self._game_bounds.initial_position.y - 2,
+            self._game_bounds.size.x + 4, self._game_bounds.size.y + 4
+        ).set_fill_color("black").render(self._screen)
+        Rect(
+            self._game_bounds.initial_position.x, self._game_bounds.initial_position.y,
+            self._game_bounds.size.x, self._game_bounds.size.y
+        ).set_fill_color("orange").render(self._screen)
 
     def __user_io_detection(self):
         """

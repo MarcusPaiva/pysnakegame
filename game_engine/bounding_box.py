@@ -87,3 +87,34 @@ class RectBoundingBox(BoundingBox):
     @property
     def size(self) -> pygame.Vector2:
         return pygame.Vector2(self._x - self._x0, self._y - self._y0)
+
+
+class CircleBoundingBox(BoundingBox):
+    def __init__(self, x_center:int, y_center:int, radius:int):
+        self.__x = x_center
+        self.__y = y_center
+        self.__radius = radius
+
+    @property
+    def center(self) -> pygame.Vector2:
+        return pygame.Vector2(self.__x,self.__y)
+
+    @property
+    def initial_position(self) -> pygame.Vector2:
+        return pygame.Vector2(self.__x - self.__radius,self.__y - self.__radius)
+
+    @property
+    def final_position(self) -> pygame.Vector2:
+        return pygame.Vector2(self.__x + self.__radius,self.__y + self.__radius)
+
+    @property
+    def bounds(self) -> Tuple[int, int, int, int]:
+        return self.__x - self.__radius,self.__y - self.__radius, self.__x + self.__radius,self.__y + self.__radius
+
+    @property
+    def size(self) -> pygame.Vector2:
+        return pygame.Vector2(self.__radius, self.__radius)
+
+    @property
+    def radius(self):
+        return self.__radius

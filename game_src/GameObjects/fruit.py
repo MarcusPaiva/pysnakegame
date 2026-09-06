@@ -6,6 +6,7 @@ from pygame.rect import RectType, Rect
 
 from game_engine.GameObject import GameObject
 from game_engine.bounding_box import BoundingBox
+from game_engine.game_artfacts_2d import Circle
 
 
 class Fruit(GameObject):
@@ -40,5 +41,5 @@ class Fruit(GameObject):
         pass
 
     def draw(self):
-        self._sprite = pygame.draw.circle(self._screen, "green", self._fruit_pos, self._radius)
+        self._sprite = Circle(self._fruit_pos.x, self._fruit_pos.y, self._radius).set_fill_color("green").render(self._screen)
 

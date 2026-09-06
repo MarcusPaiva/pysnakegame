@@ -5,6 +5,7 @@ from pygame import Surface, SurfaceType
 
 from game_engine.bounding_box import RectBoundingBox
 from game_engine.font import GameFont
+from game_engine.game_artfacts_2d import Rect
 from game_engine.inputs.game_input import mouse_click_detection, mouse_position
 
 
@@ -139,16 +140,8 @@ class Button:
         color = self._background_color
         if self._hover:
             color = self._hover_color
-        pygame.draw.rect(
-            self._screen,
-            color, [
-                self._main_bounding_box.initial_position.x,
-                self._main_bounding_box.initial_position.y,
-                self._main_bounding_box.size.x,
-                self._main_bounding_box.size.y
-            ],
-            0,
-        )
+        box = self._main_bounding_box
+        Rect(box.initial_position.x, box.initial_position.y, box.size.x, box.size.y).set_fill_color(color).render(self._screen)
         self._screen.blit(
             self._button_text,
             self._text_position
