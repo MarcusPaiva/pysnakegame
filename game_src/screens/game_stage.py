@@ -5,6 +5,7 @@ from game_src.GameObjects.player import Player
 from game_src.GameObjects.fruit import Fruit
 from game_src.game_components.modal import Modal, Options
 from game_engine.bounding_box import RectBoundingBox
+from game_engine.font import GameFont
 from game_engine.game_brief import GameBrief
 from game_engine.inputs.game_input import Keyboard, Keys
 from game_engine.sound import Music
@@ -48,11 +49,12 @@ class Stage(GameScreen):
         self._modal_pause = Modal(self._screen, "Paused")
         self._collision = 0
         self._end_game = False
-        pygame.font.init()
-        self._main_font = pygame.font.Font(r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', 80)
-        self._header_font = pygame.font.Font(r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', 80)
-        self._paused_text = self._main_font.render('Paused', False, (255, 255, 255))
-        self._points_text = self._main_font.render(f'Points {self._player.points}', False, (255, 255, 255))
+        self._main_font = GameFont(
+            r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', 80, 'Paused'
+        ).set_color([255, 255, 255])
+        self._paused_text = self._main_font.render()
+        self._main_font.set_text(f'Points {self._player.points}')
+        self._points_text = self._main_font.render()
         self._last_key_pressed = []
         self._game_brief = GameBrief()
         self._game_status = GameStatus()
@@ -116,7 +118,8 @@ class Stage(GameScreen):
         Draw score on header.
         :return:
         """
-        self._points_text = self._main_font.render(f'Points {self._player.points}', False, (255, 255, 255))
+        self._main_font.set_text(f'Points {self._player.points}')
+        self._points_text = self._main_font.render()
         self._screen.blit(
             self._points_text,
             (self._game_header_bounds.initial_position.x + 10, self._game_header_bounds.initial_position.y)

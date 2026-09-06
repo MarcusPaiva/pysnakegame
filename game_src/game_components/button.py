@@ -4,6 +4,7 @@ import pygame
 from pygame import Surface, SurfaceType
 
 from game_engine.bounding_box import RectBoundingBox
+from game_engine.font import GameFont
 from game_engine.inputs.game_input import mouse_click_detection, mouse_position
 
 
@@ -43,7 +44,9 @@ class Button:
         return self._margin
 
     def setup(self):
-        self._main_font = pygame.font.Font(r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', self._font_size)
+        self._main_font = GameFont(
+            r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', self._font_size, self._text
+        ).set_color([255, 255, 255])
 
     def set_position(self, start_x: float, start_y: float):
         """
@@ -60,12 +63,12 @@ class Button:
         of its position. Requires setup() to have been called first.
         :return: Vector2 with the button's (width, height).
         """
-        text_width, text_height = self._main_font.size(f"{self._text}")
+        text_width, text_height = self._main_font.get_text_size()
         return pygame.Vector2(text_width + self._margin * 2, text_height + self._margin * 2)
 
     def _process_button_box(self):
         """Process button box"""
-        x, y = self._main_font.size(f"{self._text}")
+        x, y = self._main_font.get_text_size()
         width, height = (self._x + x + self._margin,
                          self._y + y + self._margin)
         self._main_bounding_box = RectBoundingBox(
@@ -104,7 +107,7 @@ class Button:
         Process button text.
         :return:
         """
-        self._button_text: Surface = self._main_font.render(f'{self._text}', False, (255, 255, 255))
+        self._button_text: Surface = self._main_font.render()
         button_text_size = self._button_text.get_size()
         text_center_x = button_text_size[0] / 2
         text_center_y = button_text_size[1] / 2

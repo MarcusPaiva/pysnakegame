@@ -2,6 +2,7 @@ import pygame
 from pygame import Surface, SurfaceType
 
 from game_src.game_components.button import Button
+from game_engine.font import GameFont
 from game_engine.game_status import GameStatus
 from game_engine.screen_game import ScreenGame
 
@@ -11,7 +12,9 @@ class MainMenu:
         self._screen = screen
         self._game_title = None
         self._title_position = (0, 0)
-        self._main_font = pygame.font.Font(r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', 120)
+        self._main_font = GameFont(
+            r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', 120, 'PySnake'
+        ).set_color([255, 255, 255])
         self._start_game_btn = Button(screen, 400, 400, "Start Game",on_click=self.__go_to_game)
         self._exit_game_game_btn = Button(screen, 500, 500, "Exit",on_click=self.__exit_game)
         self._game_status = GameStatus()
@@ -27,7 +30,7 @@ class MainMenu:
         self._start_game_btn.setup()
         self._exit_game_game_btn.hover_color("red")
         self._exit_game_game_btn.setup()
-        self._game_title: Surface = self._main_font.render(f'PySnake', False, (255, 255, 255))
+        self._game_title: Surface = self._main_font.render()
         self._title_position = ((self._screen.get_width() - self._game_title.get_width()) / 2, 150)
         self.__center_button(self._start_game_btn, 400)
         self.__center_button(self._exit_game_game_btn, 500)

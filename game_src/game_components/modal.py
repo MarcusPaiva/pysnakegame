@@ -6,6 +6,7 @@ from pygame import Surface, SurfaceType
 
 from game_src.game_components.button import Button
 from game_engine.bounding_box import RectBoundingBox
+from game_engine.font import GameFont
 
 
 @dataclass
@@ -67,7 +68,9 @@ class Modal:
         """
         Setup event.
         """
-        self._main_font = pygame.font.Font(r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', self._font_size)
+        self._main_font = GameFont(
+            r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', self._font_size, self._text
+        ).set_color([255, 255, 255])
 
     def add_options(self, options: List[Options]):
         """
@@ -126,7 +129,7 @@ class Modal:
         Process button text.
         :return:
         """
-        self._button_text: Surface = self._main_font.render(f'{self._text}', False, (255, 255, 255))
+        self._button_text: Surface = self._main_font.render()
         button_text_size = self._button_text.get_size()
         text_center_x = button_text_size[0] / 2
         text_center_y = self._main_bounding_box.size.y * 0.35
