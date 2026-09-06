@@ -1,6 +1,6 @@
 import pygame
 
-from game_engine.game_input import Keyboard, Keys
+from game_engine.inputs.game_input import Keyboard, Keys
 
 
 class _FakePressed(dict):
@@ -42,3 +42,28 @@ def test_state_refreshes_on_each_call(monkeypatch):
     keyboard.detect_buttons()
     assert keyboard.current_keys_pressing == []
     assert keyboard.user_is_pressing is False
+
+
+def test_keys_covers_every_pygame_key_constant():
+    """Keys should have one member per pygame K_* constant, not a hand-picked few."""
+    pygame_key_names = {name for name in dir(pygame) if name.startswith("K_")}
+    assert len(pygame_key_names) > 100  # sanity check pygame actually exposes many keys
+    for name in pygame_key_names:
+        assert Keys(getattr(pygame, name)).value == getattr(pygame, name)
+
+
+def test_friendly_arrow_aliases_match_their_canonical_member():
+    assert Keys.key_up is Keys.up
+    assert Keys.key_down is Keys.down
+    assert Keys.key_left is Keys.left
+    assert Keys.key_right is Keys.right
+
+
+def test_detects_an_arbitrary_letter_key(monkeypatch):
+    pressed = _FakePressed({pygame.K_a: True})
+    monkeypatch.setattr(pygame.key, "get_pressed", lambda: pressed)
+    keyboard = Keyboard()
+
+    keyboard.detect_buttons()
+
+    assert Keys.a in keyboard.current_keys_pressing
