@@ -1,19 +1,11 @@
 from logging import disable
-from typing import Tuple
 
 import pygame
 from pygame import Surface, SurfaceType
 
 from game_engine.bounding_box import RectBoundingBox
+from game_engine.inputs.game_input import mouse_click_detection
 
-
-def _mouse_click_detection() -> Tuple[int,int]:
-    """
-    Mouse click detection.
-    :return: Mouse click position.
-    """
-    if pygame.mouse.get_pressed()[0]:
-        return pygame.mouse.get_pos()
 
 class Button:
 
@@ -99,7 +91,7 @@ class Button:
 
     def update(self):
         self._process_button_box()
-        mouse_click = _mouse_click_detection()
+        mouse_click = mouse_click_detection()
         if mouse_click is not None and self.__click_inside_button_detection(mouse_click[0],mouse_click[1]):
             if self._on_click is not None and not self._disable:
                 self._on_click()

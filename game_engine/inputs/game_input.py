@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Optional, Tuple
 
 import pygame
 
@@ -44,3 +45,13 @@ class Keyboard:
     @property
     def current_keys_pressing(self):
         return self._current_keys_pressed
+
+
+def mouse_click_detection() -> Optional[Tuple[int, int]]:
+    """
+    Mouse click detection.
+    :return: Mouse click position, or None if the left button isn't pressed.
+    """
+    if pygame.mouse.get_pressed()[0]:
+        return pygame.mouse.get_pos()
+    return None
