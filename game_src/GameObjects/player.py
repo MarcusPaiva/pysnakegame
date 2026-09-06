@@ -16,7 +16,7 @@ class Player(GameObject):
         self._bounds = game_bounds
         self._player_pos = self._bounds.center
         self._speed = 3
-        self._last_position = pygame.K_w
+        self._last_position = Keys.up
         self._radius = 10
         self._sprite = None
         self._point = 1
@@ -59,30 +59,30 @@ class Player(GameObject):
     def __control_event(self):
         self._game_keyboard.detect_buttons()
         keys = self._game_keyboard.current_keys_pressing
-        if Keys.key_up in keys and not self._last_position == pygame.K_w:
-            self._last_position = pygame.K_w
-        if Keys.key_down in keys and not self._last_position == pygame.K_s:
-            self._last_position = pygame.K_s
-        if Keys.key_left in keys and not self._last_position == pygame.K_a:
-            self._last_position = pygame.K_a
-        if Keys.key_right in keys and not self._last_position == pygame.K_d:
-            self._last_position = pygame.K_d
+        if Keys.key_up in keys and not self._last_position == Keys.up:
+            self._last_position = Keys.up
+        if Keys.key_down in keys and not self._last_position == Keys.down:
+            self._last_position = Keys.down
+        if Keys.key_left in keys and not self._last_position == Keys.left:
+            self._last_position = Keys.left
+        if Keys.key_right in keys and not self._last_position == Keys.right:
+            self._last_position = Keys.right
 
     def __move(self):
         # Why does this code create mental knots?
-        if self._last_position == pygame.K_w:
+        if self._last_position == Keys.up:
             self._player_pos.y -= self._radius * 2 + 3
             if self._player_pos.y - self._radius < self._bounds.initial_position.y:
                 self._player_pos.y = self._bounds.final_position.y - self._radius
-        if self._last_position == pygame.K_s:
+        if self._last_position == Keys.down:
             self._player_pos.y += self._radius * 2 + 3
             if self._player_pos.y + self._radius > self._bounds.final_position.y:
                 self._player_pos.y = self._bounds.initial_position.y + self._radius
-        if self._last_position == pygame.K_a:
+        if self._last_position == Keys.left:
             self._player_pos.x -= self._radius * 2 + 3
             if self._player_pos.x - self._radius < self._bounds.initial_position.x:
                 self._player_pos.x = self._bounds.final_position.x - self._radius
-        if self._last_position == pygame.K_d:
+        if self._last_position == Keys.right:
             self._player_pos.x += self._radius * 2 + 3
             if self._player_pos.x + self._radius > self._bounds.final_position.x:
                 self._player_pos.x = self._bounds.initial_position.x + self._radius

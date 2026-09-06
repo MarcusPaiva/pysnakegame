@@ -1,6 +1,6 @@
-import pygame
 import pytest
 
+from game_engine.inputs.game_input import Keys
 from game_src.GameObjects.player import Player
 
 
@@ -31,7 +31,7 @@ def test_add_point_increments_score_and_speed(player):
 def test_wrap_around_right_edge(player, game_bounds):
     player._player_pos.x = game_bounds.final_position.x - 1
     player._player_pos.y = 300
-    player._last_position = pygame.K_d
+    player._last_position = Keys.right
 
     _move(player)  # steps past the edge and wraps in the same step
 
@@ -41,7 +41,7 @@ def test_wrap_around_right_edge(player, game_bounds):
 def test_wrap_around_left_edge(player, game_bounds):
     player._player_pos.x = game_bounds.initial_position.x + 1
     player._player_pos.y = 300
-    player._last_position = pygame.K_a
+    player._last_position = Keys.left
 
     _move(player)
 
@@ -51,7 +51,7 @@ def test_wrap_around_left_edge(player, game_bounds):
 def test_wrap_around_top_edge(player, game_bounds):
     player._player_pos.y = game_bounds.initial_position.y + 1
     player._player_pos.x = 300
-    player._last_position = pygame.K_w
+    player._last_position = Keys.up
 
     _move(player)
 
@@ -61,7 +61,7 @@ def test_wrap_around_top_edge(player, game_bounds):
 def test_wrap_around_bottom_edge(player, game_bounds):
     player._player_pos.y = game_bounds.final_position.y - 1
     player._player_pos.x = 300
-    player._last_position = pygame.K_s
+    player._last_position = Keys.down
 
     _move(player)
 
@@ -71,7 +71,7 @@ def test_wrap_around_bottom_edge(player, game_bounds):
 def test_positions_history_is_capped_at_current_points(player):
     player.points = 3
     for _ in range(10):
-        player._last_position = pygame.K_d
+        player._last_position = Keys.right
         _move(player)
 
     assert len(player.positions) <= 3
