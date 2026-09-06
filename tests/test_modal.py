@@ -14,15 +14,15 @@ def test_bounding_box_is_proportional_to_screen_size(small_screen):
     modal = Modal(small_screen, "Game Over", width_ratio=0.6, height_ratio=0.55)
 
     box = modal._main_bounding_box
-    assert box.size.x == pytest.approx(800 * 0.6)
-    assert box.size.y == pytest.approx(500 * 0.55)
+    assert box.size[0] == pytest.approx(800 * 0.6)
+    assert box.size[1] == pytest.approx(500 * 0.55)
 
 
 def test_bounding_box_is_centered_on_screen(small_screen):
     modal = Modal(small_screen, "Game Over", width_ratio=0.6, height_ratio=0.55)
 
     box = modal._main_bounding_box
-    assert box.center == pygame.Vector2(400, 250)
+    assert box.center == [400, 250]
 
 
 def test_bounding_box_recomputes_when_screen_changes_size():
@@ -40,8 +40,8 @@ def test_bounding_box_recomputes_when_screen_changes_size():
     modal.update()
 
     big_size = modal._main_bounding_box.size
-    assert big_size.x == pytest.approx(small_size.x * 2)
-    assert big_size.y == pytest.approx(small_size.y * 2)
+    assert big_size[0] == pytest.approx(small_size[0] * 2)
+    assert big_size[1] == pytest.approx(small_size[1] * 2)
 
 
 def test_option_buttons_have_equal_outer_margins(small_screen):
@@ -62,7 +62,7 @@ def test_option_buttons_have_equal_outer_margins(small_screen):
 
     box = modal._main_bounding_box
     first_btn, last_btn = modal._options_buttons[0], modal._options_buttons[-1]
-    left_margin = first_btn._main_bounding_box.initial_position.x - box.initial_position.x
-    right_margin = box.final_position.x - last_btn._main_bounding_box.final_position.x
+    left_margin = first_btn._main_bounding_box.initial_position[0] - box.initial_position[0]
+    right_margin = box.final_position[0] - last_btn._main_bounding_box.final_position[0]
 
     assert left_margin == pytest.approx(right_margin, abs=1.0)

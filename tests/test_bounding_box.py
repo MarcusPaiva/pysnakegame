@@ -1,4 +1,3 @@
-import pygame
 import pytest
 
 from game_engine.bounding_box import CircleBoundingBox, RectBoundingBox
@@ -6,18 +5,18 @@ from game_engine.bounding_box import CircleBoundingBox, RectBoundingBox
 
 def test_initial_and_final_position():
     box = RectBoundingBox(10, 20, 110, 220)
-    assert box.initial_position == pygame.Vector2(10, 20)
-    assert box.final_position == pygame.Vector2(110, 220)
+    assert box.initial_position == [10, 20]
+    assert box.final_position == [110, 220]
 
 
 def test_size():
     box = RectBoundingBox(10, 20, 110, 220)
-    assert box.size == pygame.Vector2(100, 200)
+    assert box.size == [100, 200]
 
 
 def test_center():
     box = RectBoundingBox(0, 0, 100, 200)
-    assert box.center == pygame.Vector2(50, 100)
+    assert box.center == [50, 100]
 
 
 def test_bounds_tuple():
@@ -45,6 +44,14 @@ def test_circle_plain_number_accessors():
     assert (circle.center_x, circle.center_y) == (50, 60)
     assert (circle.x0, circle.y0, circle.x1, circle.y1) == (40, 50, 60, 70)
     assert (circle.width, circle.height) == (20, 20)
+
+
+def test_circle_pair_accessors_are_plain_lists():
+    circle = CircleBoundingBox(50, 60, 10)
+    assert circle.center == [50, 60]
+    assert circle.initial_position == [40, 50]
+    assert circle.final_position == [60, 70]
+    assert circle.size == [20, 20]
 
 
 def test_circle_set_position_moves_to_an_absolute_point():
