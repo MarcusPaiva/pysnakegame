@@ -4,7 +4,7 @@ import pygame
 from pygame import Surface, SurfaceType
 
 from game_engine.bounding_box import RectBoundingBox
-from game_engine.inputs.game_input import mouse_click_detection
+from game_engine.inputs.game_input import mouse_click_detection, mouse_position
 
 
 class Button:
@@ -116,7 +116,7 @@ class Button:
         Mouse move inside box detection event.
         :return: Mouse inside box status.
         """
-        position_x, position_y = pygame.mouse.get_pos()
+        position_x, position_y = mouse_position()
         box_bounds = self._main_bounding_box.bounds
         if box_bounds[0] < position_x < box_bounds[2] and box_bounds[1] < position_y < box_bounds[3]:
             return True

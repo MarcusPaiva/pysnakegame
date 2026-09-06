@@ -55,3 +55,11 @@ def mouse_click_detection() -> Optional[Tuple[int, int]]:
     if pygame.mouse.get_pressed()[0]:
         return pygame.mouse.get_pos()
     return None
+
+
+def mouse_position() -> Tuple[int, int]:
+    """
+    Current mouse cursor position, regardless of any button being pressed.
+    :return: Mouse position.
+    """
+    return pygame.mouse.get_pos()
