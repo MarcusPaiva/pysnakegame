@@ -8,7 +8,7 @@ from pygame.rect import RectType, Rect
 from game_engine.GameObject import GameObject
 from game_engine.bounding_box import BoundingBox
 from game_engine.inputs.game_input import Keyboard, Keys
-from game_engine.inputs.sound import SoundEffect
+from game_engine.sound import SoundEffect
 
 
 class Player(GameObject):

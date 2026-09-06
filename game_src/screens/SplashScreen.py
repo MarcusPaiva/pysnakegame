@@ -2,7 +2,7 @@ import pygame
 from pygame import Surface, SurfaceType
 
 from game_engine.image_effects import fade_image
-from game_engine.inputs.sound import SoundEffect
+from game_engine.sound import SoundEffect
 from game_src.screens.game_screens import GameScreen
 
 
