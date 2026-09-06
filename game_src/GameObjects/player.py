@@ -5,7 +5,7 @@ import pygame
 from pygame import SurfaceType, Surface
 from pygame.rect import RectType, Rect
 
-from game_src.GameObjects.GameObject import GameObject
+from game_engine.GameObject import GameObject
 from game_engine.bounding_box import BoundingBox
 from game_engine.game_input import Keyboard, Keys
 

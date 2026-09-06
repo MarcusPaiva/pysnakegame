@@ -4,7 +4,7 @@ import random
 
 from pygame.rect import RectType, Rect
 
-from game_src.GameObjects.GameObject import GameObject
+from game_engine.GameObject import GameObject
 from game_engine.bounding_box import BoundingBox
 
 
