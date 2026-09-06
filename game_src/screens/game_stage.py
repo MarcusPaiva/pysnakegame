@@ -8,7 +8,7 @@ from game_engine.bounding_box import RectBoundingBox
 from game_engine.font import GameFont
 from game_engine.game_artfacts_2d import Rect
 from game_engine.game_brief import GameBrief
-from game_engine.inputs.game_input import Keyboard, Keys
+from game_engine.inputs.game_input import Keyboard, Keys, set_reapeat
 from game_engine.sound import Music
 from game_engine.game_status import GameStatus
 from game_engine.screen_game import ScreenGame
@@ -59,7 +59,7 @@ class Stage(GameScreen):
         self._last_key_pressed = []
         self._game_brief = GameBrief()
         self._game_status = GameStatus()
-        pygame.key.set_repeat(50,200)
+        set_reapeat(50,200)
         self._music = Music(r'./game_src/assets/sounds/music/main_song.mp3')
         self._game_keyboard = Keyboard()
 

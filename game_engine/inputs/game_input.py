@@ -27,6 +27,8 @@ def _build_keys_enum() -> type[Enum]:
 
 Keys = _build_keys_enum()
 
+def set_reapeat(delay, interval):
+    pygame.key.set_repeat(delay, interval)
 
 class Keyboard:
     def __init__(self):

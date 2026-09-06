@@ -1,6 +1,6 @@
 import pygame
 
-from game_engine.inputs.game_input import Keyboard, Keys
+from game_engine.inputs.game_input import Keyboard, Keys, set_reapeat
 
 
 class _FakePressed(dict):
@@ -67,3 +67,12 @@ def test_detects_an_arbitrary_letter_key(monkeypatch):
     keyboard.detect_buttons()
 
     assert Keys.a in keyboard.current_keys_pressing
+
+
+def test_set_reapeat_forwards_to_pygame_key_set_repeat(monkeypatch):
+    calls = []
+    monkeypatch.setattr(pygame.key, "set_repeat", lambda delay, interval: calls.append((delay, interval)))
+
+    set_reapeat(50, 200)
+
+    assert calls == [(50, 200)]
