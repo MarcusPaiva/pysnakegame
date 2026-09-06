@@ -16,3 +16,15 @@ def test_buttons_are_centered_on_screen_x_axis(screen):
     screen_center_x = screen.get_width() / 2
     for button in (menu._start_game_btn, menu._exit_game_game_btn):
         assert button._main_bounding_box.center.x == pytest.approx(screen_center_x, abs=1.0)
+
+
+def test_title_is_centered_on_screen_x_axis(screen):
+    """Regression test: the title used to be blitted at a hardcoded x=370."""
+    menu = MainMenu(screen)
+    menu.setup()
+
+    screen_center_x = screen.get_width() / 2
+    title_x, _ = menu._title_position
+    title_center_x = title_x + menu._game_title.get_width() / 2
+
+    assert title_center_x == pytest.approx(screen_center_x, abs=1.0)
