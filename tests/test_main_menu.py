@@ -1,0 +1,18 @@
+import pytest
+
+from src.screens.main_menu import MainMenu
+
+
+def test_buttons_are_centered_on_screen_x_axis(screen):
+    """
+    Regression test: Start Game and Exit used to sit at hardcoded x
+    positions (400 and 500), so neither was centered and they didn't
+    even line up with each other.
+    """
+    menu = MainMenu(screen)
+    menu.setup()
+    menu._process()  # computes each button's bounding box from its position
+
+    screen_center_x = screen.get_width() / 2
+    for button in (menu._start_game_btn, menu._exit_game_game_btn):
+        assert button._main_bounding_box.center.x == pytest.approx(screen_center_x, abs=1.0)

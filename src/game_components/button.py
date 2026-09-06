@@ -46,6 +46,10 @@ class Button:
     def disable(self, value:bool):
         self._disable = value
 
+    @property
+    def margin(self) -> int:
+        return self._margin
+
     def setup(self):
         self._main_font = pygame.font.Font(r'./src/assets/fonts/roboto/Roboto-Black.ttf', self._font_size)
 

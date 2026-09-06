@@ -27,6 +27,18 @@ class MainMenu:
         self._exit_game_game_btn.hover_color("red")
         self._exit_game_game_btn.setup()
         self._game_title: Surface = self._main_font.render(f'PySnake', False, (255, 255, 255))
+        self.__center_button(self._start_game_btn, 400)
+        self.__center_button(self._exit_game_game_btn, 500)
+
+    def __center_button(self, button: Button, y: float):
+        """
+        Reposition a button so its center sits on the screen's X axis.
+        :param button: Button to center (must already be set up).
+        :param y: Axis y start position to keep.
+        """
+        width = button.content_size().x
+        center_x = self._screen.get_width() / 2
+        button.set_position(center_x - (width / 2) + button.margin, y)
 
     def _process(self):
         self._start_game_btn.update()
