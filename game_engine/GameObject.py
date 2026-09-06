@@ -1,3 +1,6 @@
+"""
+Abstract base class every drawable, movable game entity implements.
+"""
 from abc import ABC, abstractmethod
 from typing import Optional
 
@@ -5,12 +8,18 @@ from game_engine.bounding_box import BoundingBox
 
 
 class GameObject(ABC):
+    """
+    Contract for a game entity that has a position, can be updated once
+    per frame, drawn to the screen, and optionally exposes the bounding
+    box of what it last drew (its "sprite").
+    """
 
     @abstractmethod
     def update(self):
         """
-        Update GameObject event.
-        :return:
+        Advance this object's state by one frame (movement, animation, etc).
+
+        :return: None
         """
         pass
 
@@ -18,15 +27,19 @@ class GameObject(ABC):
     @abstractmethod
     def position(self) -> BoundingBox:
         """
-        GameObject current position.
-        :return:
+        This object's current position.
+
+        :return: The object's bounding box.
+        :rtype: BoundingBox
         """
         pass
 
     @abstractmethod
     def draw(self) -> None:
         """
-        GameObject Draw event.
+        Draw this object onto its screen.
+
+        :return: None
         """
         pass
 
@@ -34,6 +47,10 @@ class GameObject(ABC):
     @abstractmethod
     def sprite(self) -> Optional[BoundingBox]:
         """
-        Return GameObject's sprite.
+        The bounding box of the shape last drawn for this object, if any.
+
+        :return: The last-drawn bounding box, or None if nothing has been
+            drawn yet.
+        :rtype: Optional[BoundingBox]
         """
         pass

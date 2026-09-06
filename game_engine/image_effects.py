@@ -1,3 +1,6 @@
+"""
+Standalone image fade effect, driven by its own render loop.
+"""
 import sys
 
 import pygame
@@ -6,10 +9,12 @@ import pygame
 def fade_image(screen, image, image_rect, duration=2000):
     """
     Fade effect to display images.
+
     :param screen: Screen to show image.
     :param image: Image to display.
     :param image_rect: Image bounds.
-    :param duration: Effect duration.
+    :param duration: Effect duration, in milliseconds.
+    :return: None
     """
     clock = pygame.time.Clock()
     alpha_surface = pygame.Surface(image.get_size(), pygame.SRCALPHA)
