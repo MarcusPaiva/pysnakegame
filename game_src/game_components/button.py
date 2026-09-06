@@ -144,26 +144,3 @@ class Button:
             self._button_text,
             self._text_position
         )
-
-if __name__ == "__main__":
-    import pygame
-
-    pygame.init()
-    screen = SurfaceScreen(1100, 720, "User Button test")
-    running = True
-    def click():
-        print("clicked!")
-    button = Button(screen, 200, 200, "Click Test!", on_click=click )
-    button.setup()
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-        screen.fill("orange")
-        button.update()
-        button.draw()
-        screen.flip()
-        screen.set_clock(60)
-
-
-

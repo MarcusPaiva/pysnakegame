@@ -151,34 +151,3 @@ class Modal:
             )
             for option in self._options_buttons:
                 option.draw()
-
-
-if __name__ == "__main__":
-    import pygame
-
-    pygame.init()
-    screen = SurfaceScreen(1100, 720, "User Button test")
-    running = True
-    modal = Modal(screen, "Game Over")
-    def confirm():
-        print("Confirm")
-
-    def dismiss():
-        print("Dismiss!")
-        modal.show(False)
-    options = [
-        Options("Confirm", confirm, "green", "white"),
-        Options("Dismiss", dismiss, "red", "white"),
-    ]
-    modal.add_options(options)
-
-    modal.setup()
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-        screen.fill("orange")
-        modal.update()
-        modal.draw()
-        screen.flip()
-        screen.set_clock(60)
