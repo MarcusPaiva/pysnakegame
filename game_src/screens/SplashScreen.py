@@ -1,12 +1,11 @@
-from pygame import Surface, SurfaceType
-
 from game_engine.image import Image
+from game_engine.screen import SurfaceScreen
 from game_engine.sound import SoundEffect
 from game_src.screens.game_screens import GameScreen
 
 
 class SplashScreen(GameScreen):
-    def __init__(self, screen: Surface | SurfaceType):
+    def __init__(self, screen: SurfaceScreen):
         """
         Initialize splash screen.
         :param screen: Screen to show splash screen.

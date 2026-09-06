@@ -1,12 +1,12 @@
 import pygame
 
 from game_engine.game_management import GameManagement
+from game_engine.screen import SurfaceScreen
 from game_src.screens.SplashScreen import SplashScreen
 
 # Pygame initializer window.
 pygame.init()
-screen = pygame.display.set_mode((1100, 720))
-pygame.display.set_caption("PySnake Game")
+screen = SurfaceScreen(1100, 720, "PySnake Game")
 
 # Splash screen
 splash = SplashScreen(screen)

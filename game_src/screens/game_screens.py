@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from pygame import Surface, SurfaceType
+from game_engine.screen import SurfaceScreen
 
 
 class GameScreen(ABC):
@@ -9,7 +9,7 @@ class GameScreen(ABC):
     """
 
     @abstractmethod
-    def __init__(self, screen: Surface | SurfaceType):
+    def __init__(self, screen: SurfaceScreen):
         """
         Game Scree initializer.
         :param screen: Screen window.

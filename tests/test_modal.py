@@ -1,13 +1,13 @@
-import pygame
 import pytest
 
+from game_engine.screen import SurfaceScreen
 from game_src.game_components.modal import Modal, Options
 
 
 @pytest.fixture
 def small_screen():
-    """A throwaway surface, distinct from the shared session screen."""
-    return pygame.Surface((800, 500))
+    """A throwaway 800x500 app screen, distinct from the shared session screen."""
+    return SurfaceScreen(800, 500, "Test")
 
 
 def test_bounding_box_is_proportional_to_screen_size(small_screen):
@@ -30,12 +30,12 @@ def test_bounding_box_recomputes_when_screen_changes_size():
     Regression test: the modal used to be a fixed pixel size regardless of
     the window, so it did not scale proportionally with the screen.
     """
-    surface = pygame.Surface((800, 500))
-    modal = Modal(surface, "Game Over", width_ratio=0.6, height_ratio=0.55)
+    surface_screen = SurfaceScreen(800, 500, "Test")
+    modal = Modal(surface_screen, "Game Over", width_ratio=0.6, height_ratio=0.55)
     small_size = modal._main_bounding_box.size
 
-    bigger_surface = pygame.Surface((1600, 1000))
-    modal._screen = bigger_surface
+    bigger_screen = SurfaceScreen(1600, 1000, "Test")
+    modal._screen = bigger_screen
     modal.setup()
     modal.update()
 

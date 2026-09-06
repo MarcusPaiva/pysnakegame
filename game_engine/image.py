@@ -9,5 +9,5 @@ class Image:
 
     def fade(self, screen, duration):
         self.__image.convert_alpha()
-        logo_rect = self.__image.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2))
+        logo_rect = self.__image.get_rect(center=(screen.width() // 2, screen.height() // 2))
         fade_image(screen, self.__image.convert_alpha(), logo_rect, duration)

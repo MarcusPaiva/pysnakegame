@@ -1,13 +1,11 @@
 from dataclasses import dataclass, field
 from typing import Callable, List
 
-import pygame
-from pygame import Surface, SurfaceType
-
 from game_src.game_components.button import Button
 from game_engine.bounding_box import RectBoundingBox
 from game_engine.font import GameFont
 from game_engine.game_artfacts_2d import Rect
+from game_engine.screen import SurfaceScreen
 
 
 @dataclass
@@ -19,7 +17,7 @@ class Options:
 
 
 class Modal:
-    def __init__(self, screen: Surface | SurfaceType, text: str, width_ratio: float = 0.6,
+    def __init__(self, screen: SurfaceScreen, text: str, width_ratio: float = 0.6,
                  height_ratio: float = 0.55, margin: int = 10, font_size: int = 40, show=True):
         """
         Modal initializer.
@@ -49,8 +47,8 @@ class Modal:
         to the screen's current dimensions.
         :return: Centered RectBoundingBox.
         """
-        screen_width = self._screen.get_width()
-        screen_height = self._screen.get_height()
+        screen_width = self._screen.width()
+        screen_height = self._screen.height()
         width = screen_width * self._width_ratio
         height = screen_height * self._height_ratio
         x0 = (screen_width - width) / 2
@@ -131,7 +129,7 @@ class Modal:
         Process button text.
         :return:
         """
-        self._button_text: Surface = self._main_font.render()
+        self._button_text = self._main_font.render()
         button_text_size = self._button_text.get_size()
         text_center_x = button_text_size[0] / 2
         text_center_y = self._main_bounding_box.height * 0.35
@@ -147,7 +145,7 @@ class Modal:
             Rect(box.x0, box.y0, box.width, box.height).set_fill_color(self._margin_color).render(self._screen)
             Rect(box.x0, box.y0, box.width, box.height).set_fill_color(self._background_color).render(self._screen)
 
-            self._screen.blit(
+            self._screen.draw(
                 self._button_text,
                 self._text_position
             )
@@ -156,11 +154,11 @@ class Modal:
 
 
 if __name__ == "__main__":
+    import pygame
+
     pygame.init()
-    screen = pygame.display.set_mode((1100, 720))
-    pygame.display.set_caption("User Button test")
+    screen = SurfaceScreen(1100, 720, "User Button test")
     running = True
-    clock = pygame.time.Clock()
     modal = Modal(screen, "Game Over")
     def confirm():
         print("Confirm")
@@ -182,5 +180,5 @@ if __name__ == "__main__":
         screen.fill("orange")
         modal.update()
         modal.draw()
-        pygame.display.flip()
-        clock.tick(60)
+        screen.flip()
+        screen.set_clock(60)

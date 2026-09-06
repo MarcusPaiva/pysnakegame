@@ -1,18 +1,18 @@
 from datetime import datetime, timedelta
 from typing import List
 
-from pygame import SurfaceType, Surface
 from pygame.rect import RectType, Rect
 
 from game_engine.GameObject import GameObject
 from game_engine.bounding_box import BoundingBox, CircleBoundingBox
 from game_engine.game_artfacts_2d import Circle
 from game_engine.inputs.game_input import Keyboard, Keys
+from game_engine.screen import SurfaceScreen
 from game_engine.sound import SoundEffect
 
 
 class Player(GameObject):
-    def __init__(self, screen:Surface | SurfaceType, game_bounds:BoundingBox):
+    def __init__(self, screen:SurfaceScreen, game_bounds:BoundingBox):
         self._screen = screen
         self._bounds = game_bounds
         self._speed = 3

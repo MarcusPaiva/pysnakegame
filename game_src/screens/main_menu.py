@@ -1,13 +1,12 @@
-from pygame import Surface, SurfaceType
-
 from game_src.game_components.button import Button
 from game_engine.font import GameFont
+from game_engine.screen import SurfaceScreen
 from game_engine.game_status import GameStatus
 from game_engine.screen_game import ScreenGame
 
 
 class MainMenu:
-    def __init__(self, screen: Surface | SurfaceType):
+    def __init__(self, screen: SurfaceScreen):
         self._screen = screen
         self._game_title = None
         self._title_position = (0, 0)
@@ -29,8 +28,8 @@ class MainMenu:
         self._start_game_btn.setup()
         self._exit_game_game_btn.hover_color("red")
         self._exit_game_game_btn.setup()
-        self._game_title: Surface = self._main_font.render()
-        self._title_position = ((self._screen.get_width() - self._game_title.get_width()) / 2, 150)
+        self._game_title = self._main_font.render()
+        self._title_position = ((self._screen.width() - self._game_title.get_width()) / 2, 150)
         self.__center_button(self._start_game_btn, 400)
         self.__center_button(self._exit_game_game_btn, 500)
 
@@ -41,7 +40,7 @@ class MainMenu:
         :param y: Axis y start position to keep.
         """
         width = button.content_size().width
-        center_x = self._screen.get_width() / 2
+        center_x = self._screen.width() / 2
         button.set_position(center_x - (width / 2) + button.margin, y)
 
     def _process(self):
@@ -51,7 +50,7 @@ class MainMenu:
     def _draw(self):
         self._start_game_btn.draw()
         self._exit_game_game_btn.draw()
-        self._screen.blit(
+        self._screen.draw(
             self._game_title,
             self._title_position
         )

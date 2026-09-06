@@ -42,5 +42,5 @@ def fade_image(screen, image, image_rect, duration=2000):
         alpha_surface.set_alpha(alpha)
 
         screen.fill("white")
-        screen.blit(alpha_surface, image_rect)
-        pygame.display.flip()
+        screen.draw(alpha_surface, image_rect)
+        screen.flip()

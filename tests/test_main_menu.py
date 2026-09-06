@@ -13,7 +13,7 @@ def test_buttons_are_centered_on_screen_x_axis(screen):
     menu.setup()
     menu._process()  # computes each button's bounding box from its position
 
-    screen_center_x = screen.get_width() / 2
+    screen_center_x = screen.width() / 2
     for button in (menu._start_game_btn, menu._exit_game_game_btn):
         assert button._main_bounding_box.center[0] == pytest.approx(screen_center_x, abs=1.0)
 
@@ -23,7 +23,7 @@ def test_title_is_centered_on_screen_x_axis(screen):
     menu = MainMenu(screen)
     menu.setup()
 
-    screen_center_x = screen.get_width() / 2
+    screen_center_x = screen.width() / 2
     title_x, _ = menu._title_position
     title_center_x = title_x + menu._game_title.get_width() / 2
 

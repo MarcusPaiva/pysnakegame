@@ -41,8 +41,14 @@ def _reset_singletons():
 
 @pytest.fixture
 def screen():
-    """The (dummy) game window surface, reused by every test."""
-    return pygame.display.get_surface()
+    """
+    The (dummy) app screen, reused by every test. Constructing a
+    SurfaceScreen at the session's own size reuses pygame's single
+    display surface rather than creating a new one.
+    """
+    from game_engine.screen import SurfaceScreen
+
+    return SurfaceScreen(1100, 720, "Test")
 
 
 @pytest.fixture

@@ -1,10 +1,10 @@
 from datetime import datetime, timedelta
 
 import pygame
-from pygame import Surface, SurfaceType
 
 from game_engine.game_brief import GameBrief
 from game_engine.game_status import GameStatus
+from game_engine.screen import SurfaceScreen
 from game_engine.screen_game import ScreenGame
 from game_src.screens.game_stage import Stage
 from game_src.screens.main_menu import MainMenu
@@ -12,14 +12,14 @@ from game_src.utils.game_storage import GameBriefStorage
 
 
 class GameManagement:
-    def __init__(self, screen: Surface | SurfaceType):
+    def __init__(self, screen: SurfaceScreen):
         """
         Game Management initializer.
         :param screen: Game window.
         """
+        self._screen = screen
         self._main_menu = MainMenu(screen)
         self._game_stage = Stage(screen)
-        self._clock = pygame.time.Clock()
         self._current_screen = ScreenGame.main_menu
         self._game_status = GameStatus()
         self._game_brief = GameBrief()
@@ -80,5 +80,5 @@ class GameManagement:
                     self.exit_game()
             self.save_event()
             self._process_screen()
-            pygame.display.flip()
-            self._clock.tick(60)
+            self._screen.flip()
+            self._screen.set_clock(60)

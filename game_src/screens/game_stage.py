@@ -1,6 +1,3 @@
-import pygame
-from pygame import Surface, SurfaceType
-
 from game_src.GameObjects.player import Player
 from game_src.GameObjects.fruit import Fruit
 from game_src.game_components.modal import Modal, Options
@@ -9,6 +6,7 @@ from game_engine.font import GameFont
 from game_engine.game_artfacts_2d import Rect
 from game_engine.game_brief import GameBrief
 from game_engine.inputs.game_input import Keyboard, Keys, set_reapeat
+from game_engine.screen import SurfaceScreen
 from game_engine.sound import Music
 from game_engine.game_status import GameStatus
 from game_engine.screen_game import ScreenGame
@@ -39,11 +37,11 @@ def self_collision(player:Player) -> bool:
 
 
 class Stage(GameScreen):
-    def __init__(self, screen:Surface | SurfaceType):
+    def __init__(self, screen:SurfaceScreen):
         self._screen = screen
         self._pause = False
-        self._game_bounds = RectBoundingBox(30, 100, self._screen.get_width() - 30, self._screen.get_height() - 30)
-        self._game_header_bounds = RectBoundingBox(0, 0, self._screen.get_width(), self._game_bounds.y0 - 25)
+        self._game_bounds = RectBoundingBox(30, 100, self._screen.width() - 30, self._screen.height() - 30)
+        self._game_header_bounds = RectBoundingBox(0, 0, self._screen.width(), self._game_bounds.y0 - 25)
         self._player = Player(screen, self._game_bounds)
         self._fruit = Fruit(screen, self._game_bounds)
         self._modal_game_over = Modal(self._screen, "Game Over")
@@ -121,7 +119,7 @@ class Stage(GameScreen):
         """
         self._main_font.set_text(f'Points {self._player.points}')
         self._points_text = self._main_font.render()
-        self._screen.blit(
+        self._screen.draw(
             self._points_text,
             (self._game_header_bounds.x0 + 10, self._game_header_bounds.y0)
         )
@@ -139,7 +137,7 @@ class Stage(GameScreen):
         Draw scenario.
         """
         Rect(
-            0, self._game_bounds.y0 - 25, self._screen.get_width(), self._screen.get_height()
+            0, self._game_bounds.y0 - 25, self._screen.width(), self._screen.height()
         ).set_fill_color("#A41623").render(self._screen)
         Rect(
             self._game_bounds.x0 - 2, self._game_bounds.y0 - 2,
