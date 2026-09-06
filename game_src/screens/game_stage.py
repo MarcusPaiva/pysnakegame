@@ -43,7 +43,7 @@ class Stage(GameScreen):
         self._screen = screen
         self._pause = False
         self._game_bounds = RectBoundingBox(30, 100, self._screen.get_width() - 30, self._screen.get_height() - 30)
-        self._game_header_bounds = RectBoundingBox(0, 0, self._screen.get_width(), self._game_bounds.initial_position.y - 25)
+        self._game_header_bounds = RectBoundingBox(0, 0, self._screen.get_width(), self._game_bounds.y0 - 25)
         self._player = Player(screen, self._game_bounds)
         self._fruit = Fruit(screen, self._game_bounds)
         self._modal_game_over = Modal(self._screen, "Game Over")
@@ -123,7 +123,7 @@ class Stage(GameScreen):
         self._points_text = self._main_font.render()
         self._screen.blit(
             self._points_text,
-            (self._game_header_bounds.initial_position.x + 10, self._game_header_bounds.initial_position.y)
+            (self._game_header_bounds.x0 + 10, self._game_header_bounds.y0)
         )
 
     def __draw_header(self):
@@ -131,7 +131,7 @@ class Stage(GameScreen):
         Draw header.
         """
         header = self._game_header_bounds
-        Rect(header.initial_position.x, header.initial_position.y, header.size.x, header.size.y).set_fill_color("#596869").render(self._screen)
+        Rect(header.x0, header.y0, header.width, header.height).set_fill_color("#596869").render(self._screen)
         self.__draw_score()
 
     def __draw_scenario(self):
@@ -139,15 +139,15 @@ class Stage(GameScreen):
         Draw scenario.
         """
         Rect(
-            0, self._game_bounds.initial_position.y - 25, self._screen.get_width(), self._screen.get_height()
+            0, self._game_bounds.y0 - 25, self._screen.get_width(), self._screen.get_height()
         ).set_fill_color("#A41623").render(self._screen)
         Rect(
-            self._game_bounds.initial_position.x - 2, self._game_bounds.initial_position.y - 2,
-            self._game_bounds.size.x + 4, self._game_bounds.size.y + 4
+            self._game_bounds.x0 - 2, self._game_bounds.y0 - 2,
+            self._game_bounds.width + 4, self._game_bounds.height + 4
         ).set_fill_color("black").render(self._screen)
         Rect(
-            self._game_bounds.initial_position.x, self._game_bounds.initial_position.y,
-            self._game_bounds.size.x, self._game_bounds.size.y
+            self._game_bounds.x0, self._game_bounds.y0,
+            self._game_bounds.width, self._game_bounds.height
         ).set_fill_color("orange").render(self._screen)
 
     def __user_io_detection(self):

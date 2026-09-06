@@ -1,4 +1,3 @@
-import pygame
 from pygame import Surface, SurfaceType
 
 from game_src.game_components.button import Button
@@ -41,7 +40,7 @@ class MainMenu:
         :param button: Button to center (must already be set up).
         :param y: Axis y start position to keep.
         """
-        width = button.content_size().x
+        width = button.content_size().width
         center_x = self._screen.get_width() / 2
         button.set_position(center_x - (width / 2) + button.margin, y)
 

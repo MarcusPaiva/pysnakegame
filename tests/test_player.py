@@ -18,7 +18,8 @@ def _move(player):
 
 
 def test_starts_centered_in_bounds(player, game_bounds):
-    assert player.position == game_bounds.center
+    assert player.position.center_x == game_bounds.center_x
+    assert player.position.center_y == game_bounds.center_y
 
 
 def test_add_point_increments_score_and_speed(player):
@@ -29,43 +30,39 @@ def test_add_point_increments_score_and_speed(player):
 
 
 def test_wrap_around_right_edge(player, game_bounds):
-    player._player_pos.x = game_bounds.final_position.x - 1
-    player._player_pos.y = 300
+    player._position.set_position(game_bounds.x1 - 1, 300)
     player._last_position = Keys.right
 
     _move(player)  # steps past the edge and wraps in the same step
 
-    assert player.position.x == pytest.approx(game_bounds.initial_position.x + player.radius)
+    assert player.position.center_x == pytest.approx(game_bounds.x0 + player.radius)
 
 
 def test_wrap_around_left_edge(player, game_bounds):
-    player._player_pos.x = game_bounds.initial_position.x + 1
-    player._player_pos.y = 300
+    player._position.set_position(game_bounds.x0 + 1, 300)
     player._last_position = Keys.left
 
     _move(player)
 
-    assert player.position.x == pytest.approx(game_bounds.final_position.x - player.radius)
+    assert player.position.center_x == pytest.approx(game_bounds.x1 - player.radius)
 
 
 def test_wrap_around_top_edge(player, game_bounds):
-    player._player_pos.y = game_bounds.initial_position.y + 1
-    player._player_pos.x = 300
+    player._position.set_position(300, game_bounds.y0 + 1)
     player._last_position = Keys.up
 
     _move(player)
 
-    assert player.position.y == pytest.approx(game_bounds.final_position.y - player.radius)
+    assert player.position.center_y == pytest.approx(game_bounds.y1 - player.radius)
 
 
 def test_wrap_around_bottom_edge(player, game_bounds):
-    player._player_pos.y = game_bounds.final_position.y - 1
-    player._player_pos.x = 300
+    player._position.set_position(300, game_bounds.y1 - 1)
     player._last_position = Keys.down
 
     _move(player)
 
-    assert player.position.y == pytest.approx(game_bounds.initial_position.y + player.radius)
+    assert player.position.center_y == pytest.approx(game_bounds.y0 + player.radius)
 
 
 def test_positions_history_is_capped_at_current_points(player):

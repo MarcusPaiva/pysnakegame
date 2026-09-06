@@ -58,14 +58,14 @@ class Button:
         self._x = start_x
         self._y = start_y
 
-    def content_size(self) -> pygame.Vector2:
+    def content_size(self) -> RectBoundingBox:
         """
         Measure the button's rendered size (text plus margin), independent
         of its position. Requires setup() to have been called first.
-        :return: Vector2 with the button's (width, height).
+        :return: A zero-positioned RectBoundingBox whose width/height are the button's size.
         """
         text_width, text_height = self._main_font.get_text_size()
-        return pygame.Vector2(text_width + self._margin * 2, text_height + self._margin * 2)
+        return RectBoundingBox(0, 0, text_width + self._margin * 2, text_height + self._margin * 2)
 
     def _process_button_box(self):
         """Process button box"""
@@ -112,8 +112,8 @@ class Button:
         button_text_size = self._button_text.get_size()
         text_center_x = button_text_size[0] / 2
         text_center_y = button_text_size[1] / 2
-        center = self._main_bounding_box.center
-        self._text_position = [center.x - text_center_x, center.y - text_center_y]
+        box = self._main_bounding_box
+        self._text_position = [box.center_x - text_center_x, box.center_y - text_center_y]
 
     def __mouse_hove_detection(self) -> bool:
         """
@@ -141,7 +141,7 @@ class Button:
         if self._hover:
             color = self._hover_color
         box = self._main_bounding_box
-        Rect(box.initial_position.x, box.initial_position.y, box.size.x, box.size.y).set_fill_color(color).render(self._screen)
+        Rect(box.x0, box.y0, box.width, box.height).set_fill_color(color).render(self._screen)
         self._screen.blit(
             self._button_text,
             self._text_position

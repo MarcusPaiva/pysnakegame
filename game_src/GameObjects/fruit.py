@@ -1,11 +1,10 @@
-import pygame
 from pygame import SurfaceType, Surface
 import random
 
 from pygame.rect import RectType, Rect
 
 from game_engine.GameObject import GameObject
-from game_engine.bounding_box import BoundingBox
+from game_engine.bounding_box import BoundingBox, CircleBoundingBox
 from game_engine.game_artfacts_2d import Circle
 
 
@@ -13,13 +12,13 @@ class Fruit(GameObject):
     def __init__(self, screen: Surface | SurfaceType, game_bounds:BoundingBox):
         self._screen = screen
         self._bounds = game_bounds
-        self._fruit_pos = pygame.Vector2(self._bounds.final_position.x / 2, self._bounds.final_position.y / 2)
         self._radius = 10
+        self._position = CircleBoundingBox(self._bounds.x1 / 2, self._bounds.y1 / 2, self._radius)
         self._sprite = None
 
     @property
-    def position(self) -> pygame.Vector2:
-        return self._fruit_pos
+    def position(self) -> CircleBoundingBox:
+        return self._position
 
     @property
     def radius(self):
@@ -34,12 +33,13 @@ class Fruit(GameObject):
         Generate new point
         :return:
         """
-        self._fruit_pos.x = random.randint(int(self._bounds.initial_position.x) + self._radius, int(self._bounds.final_position.x) - self._radius)
-        self._fruit_pos.y = random.randint(int(self._bounds.initial_position.y) + self._radius, int(self._bounds.final_position.y) - self._radius)
+        x = random.randint(int(self._bounds.x0) + self._radius, int(self._bounds.x1) - self._radius)
+        y = random.randint(int(self._bounds.y0) + self._radius, int(self._bounds.y1) - self._radius)
+        self._position.set_position(x, y)
 
     def update(self):
         pass
 
     def draw(self):
-        self._sprite = Circle(self._fruit_pos.x, self._fruit_pos.y, self._radius).set_fill_color("green").render(self._screen)
+        self._sprite = Circle(self._position.center_x, self._position.center_y, self._radius).set_fill_color("green").render(self._screen)
 

@@ -100,9 +100,10 @@ class Modal:
         if not self._options:
             return
 
-        x, y = self._main_bounding_box.initial_position.xy
-        end_y = y + (self._main_bounding_box.size.y * 0.8)
-        size_x = self._main_bounding_box.size.x
+        x = self._main_bounding_box.x0
+        y = self._main_bounding_box.y0
+        end_y = y + (self._main_bounding_box.height * 0.8)
+        size_x = self._main_bounding_box.width
 
         buttons = []
         for option in self._options:
@@ -113,7 +114,7 @@ class Modal:
             btn.setup()
             buttons.append(btn)
 
-        widths = [btn.content_size().x for btn in buttons]
+        widths = [btn.content_size().width for btn in buttons]
         gap = self._margin
         total_width = sum(widths) + gap * (len(buttons) - 1)
         outer_margin = max((size_x - total_width) / 2, 0)
@@ -133,9 +134,9 @@ class Modal:
         self._button_text: Surface = self._main_font.render()
         button_text_size = self._button_text.get_size()
         text_center_x = button_text_size[0] / 2
-        text_center_y = self._main_bounding_box.size.y * 0.35
-        center = self._main_bounding_box.center
-        self._text_position = [center.x - text_center_x, center.y - text_center_y]
+        text_center_y = self._main_bounding_box.height * 0.35
+        box = self._main_bounding_box
+        self._text_position = [box.center_x - text_center_x, box.center_y - text_center_y]
 
     def draw(self):
         """
@@ -143,8 +144,8 @@ class Modal:
         """
         if self._show:
             box = self._main_bounding_box
-            Rect(box.initial_position.x, box.initial_position.y, box.size.x, box.size.y).set_fill_color(self._margin_color).render(self._screen)
-            Rect(box.initial_position.x, box.initial_position.y, box.size.x, box.size.y).set_fill_color(self._background_color).render(self._screen)
+            Rect(box.x0, box.y0, box.width, box.height).set_fill_color(self._margin_color).render(self._screen)
+            Rect(box.x0, box.y0, box.width, box.height).set_fill_color(self._background_color).render(self._screen)
 
             self._screen.blit(
                 self._button_text,
