@@ -14,10 +14,11 @@ class Rect:
         self.__fill_color = color
         return self
 
-    def render(self, screen):
+    def render(self, screen) -> RectBoundingBox:
         initial = self.__bounding_box.initial_position
         size = self.__bounding_box.size
-        return pygame.draw.rect(screen.get_screen(), self.__fill_color, [initial[0], initial[1], size[0], size[1]], 0)
+        pygame.draw.rect(screen.get_screen(), self.__fill_color, [initial[0], initial[1], size[0], size[1]], 0)
+        return self.__bounding_box.copy()
 
 class Circle:
     def __init__(self, position_x:int, position_y:int, radius):
@@ -28,5 +29,6 @@ class Circle:
         self.__fill_color = color
         return self
 
-    def render(self, screen):
-        return pygame.draw.circle(screen.get_screen(), self.__fill_color, self.__bounding_box.center, self.__bounding_box.radius)
+    def render(self, screen) -> CircleBoundingBox:
+        pygame.draw.circle(screen.get_screen(), self.__fill_color, self.__bounding_box.center, self.__bounding_box.radius)
+        return self.__bounding_box.copy()

@@ -1,6 +1,5 @@
 import random
-
-from pygame.rect import RectType, Rect
+from typing import Optional
 
 from game_engine.GameObject import GameObject
 from game_engine.bounding_box import BoundingBox, CircleBoundingBox
@@ -25,7 +24,7 @@ class Fruit(GameObject):
         return self._radius
 
     @property
-    def sprite(self) -> Rect | RectType | None:
+    def sprite(self) -> Optional[CircleBoundingBox]:
         return self._sprite
 
     def generate(self):

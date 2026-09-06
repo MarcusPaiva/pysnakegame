@@ -1,7 +1,5 @@
 from datetime import datetime, timedelta
-from typing import List
-
-from pygame.rect import RectType, Rect
+from typing import List, Optional
 
 from game_engine.GameObject import GameObject
 from game_engine.bounding_box import BoundingBox, CircleBoundingBox
@@ -53,7 +51,7 @@ class Player(GameObject):
         return self._radius
 
     @property
-    def sprite(self) -> Rect | RectType | None:
+    def sprite(self) -> Optional[CircleBoundingBox]:
         return self._sprite
 
     def __control_event(self):

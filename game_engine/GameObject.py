@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
+from typing import Optional
 
-import pygame
-from pygame.rect import RectType, Rect
+from game_engine.bounding_box import BoundingBox
 
 
 class GameObject(ABC):
@@ -16,7 +16,7 @@ class GameObject(ABC):
 
     @property
     @abstractmethod
-    def position(self) -> pygame.Vector2:
+    def position(self) -> BoundingBox:
         """
         GameObject current position.
         :return:
@@ -32,7 +32,7 @@ class GameObject(ABC):
 
     @property
     @abstractmethod
-    def sprite(self) -> Rect | RectType | None:
+    def sprite(self) -> Optional[BoundingBox]:
         """
         Return GameObject's sprite.
         """
