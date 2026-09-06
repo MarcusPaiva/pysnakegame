@@ -1,7 +1,7 @@
 import pygame
 from types import SimpleNamespace
 
-from src.screens.game_stage import detect_player_fruit_collision, self_collision
+from game_src.screens.game_stage import detect_player_fruit_collision, self_collision
 
 
 def _fake_player(position, positions=None, radius=10):

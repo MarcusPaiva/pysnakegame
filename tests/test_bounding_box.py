@@ -1,6 +1,6 @@
 import pygame
 
-from src.game_engines.bounding_box import RectBoundingBox
+from game_engine.bounding_box import RectBoundingBox
 
 
 def test_initial_and_final_position():

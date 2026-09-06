@@ -4,8 +4,8 @@ import random
 
 from pygame.rect import RectType, Rect
 
-from src.GameObjects.GameObject import GameObject
-from src.game_engines.bounding_box import BoundingBox
+from game_src.GameObjects.GameObject import GameObject
+from game_engine.bounding_box import BoundingBox
 
 
 class Fruit(GameObject):

@@ -1,7 +1,7 @@
 import pygame
 
-from src.game_engines.game_management import GameManagement
-from src.screens.SplashScreen import SplashScreen
+from game_engine.game_management import GameManagement
+from game_src.screens.SplashScreen import SplashScreen
 
 # Pygame initializer window.
 pygame.init()

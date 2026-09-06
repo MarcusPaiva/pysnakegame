@@ -5,9 +5,9 @@ import pygame
 from pygame import SurfaceType, Surface
 from pygame.rect import RectType, Rect
 
-from src.GameObjects.GameObject import GameObject
-from src.game_engines.bounding_box import BoundingBox
-from src.game_engines.game_input import Keyboard, Keys
+from game_src.GameObjects.GameObject import GameObject
+from game_engine.bounding_box import BoundingBox
+from game_engine.game_input import Keyboard, Keys
 
 
 class Player(GameObject):
@@ -21,7 +21,7 @@ class Player(GameObject):
         self._sprite = None
         self._point = 1
         self._prev_points = [self._player_pos]
-        self._eat_effect = pygame.mixer.Sound(r'./src/assets/sounds/effects/eating.mp3')
+        self._eat_effect = pygame.mixer.Sound(r'./game_src/assets/sounds/effects/eating.mp3')
         self._eat_effect.set_volume(0.7)
         self._prev_time = datetime.now()
         self._game_keyboard = Keyboard()

@@ -1,7 +1,7 @@
 import pygame
 import pytest
 
-from src.game_components.modal import Modal, Options
+from game_src.game_components.modal import Modal, Options
 
 
 @pytest.fixture

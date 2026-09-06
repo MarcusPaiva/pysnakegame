@@ -1,4 +1,4 @@
-from src.game_engines.screen_game import ScreenGame
+from game_engine.screen_game import ScreenGame
 
 
 class GameStatus:

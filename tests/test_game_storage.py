@@ -1,6 +1,6 @@
-from src.game_engines.game_brief import GameBrief
-from src.utils import game_storage
-from src.utils.game_storage import GameBriefStorage
+from game_engine.game_brief import GameBrief
+from game_src.utils import game_storage
+from game_src.utils.game_storage import GameBriefStorage
 
 
 def _use_temp_brief_file(monkeypatch, tmp_path):

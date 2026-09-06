@@ -1,7 +1,7 @@
 import pygame
 import pytest
 
-from src.GameObjects.player import Player
+from game_src.GameObjects.player import Player
 
 
 @pytest.fixture

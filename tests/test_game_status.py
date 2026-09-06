@@ -1,5 +1,5 @@
-from src.game_engines.game_status import GameStatus
-from src.game_engines.screen_game import ScreenGame
+from game_engine.game_status import GameStatus
+from game_engine.screen_game import ScreenGame
 
 
 def test_default_state():

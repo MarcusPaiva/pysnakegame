@@ -1,6 +1,6 @@
 import pygame
 
-from src.utils.game_collision import circle_collision_detections
+from game_engine.game_collision import circle_collision_detections
 
 
 def test_overlapping_circles_collide():

@@ -1,6 +1,6 @@
 import pytest
 
-from src.screens.main_menu import MainMenu
+from game_src.screens.main_menu import MainMenu
 
 
 def test_buttons_are_centered_on_screen_x_axis(screen):

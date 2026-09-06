@@ -1,4 +1,4 @@
-from src.GameObjects.fruit import Fruit
+from game_src.GameObjects.fruit import Fruit
 
 
 def test_generate_stays_within_bounds_minus_radius(screen, game_bounds):

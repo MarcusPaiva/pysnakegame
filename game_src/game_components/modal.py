@@ -4,8 +4,8 @@ from typing import Callable, List
 import pygame
 from pygame import Surface, SurfaceType
 
-from src.game_components.button import Button
-from src.game_engines.bounding_box import RectBoundingBox
+from game_src.game_components.button import Button
+from game_engine.bounding_box import RectBoundingBox
 
 
 @dataclass
@@ -67,7 +67,7 @@ class Modal:
         """
         Setup event.
         """
-        self._main_font = pygame.font.Font(r'./src/assets/fonts/roboto/Roboto-Black.ttf', self._font_size)
+        self._main_font = pygame.font.Font(r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', self._font_size)
 
     def add_options(self, options: List[Options]):
         """

@@ -4,7 +4,7 @@ from typing import Tuple
 import pygame
 from pygame import Surface, SurfaceType
 
-from src.game_engines.bounding_box import RectBoundingBox
+from game_engine.bounding_box import RectBoundingBox
 
 
 def _mouse_click_detection() -> Tuple[int,int]:
@@ -51,7 +51,7 @@ class Button:
         return self._margin
 
     def setup(self):
-        self._main_font = pygame.font.Font(r'./src/assets/fonts/roboto/Roboto-Black.ttf', self._font_size)
+        self._main_font = pygame.font.Font(r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', self._font_size)
 
     def set_position(self, start_x: float, start_y: float):
         """

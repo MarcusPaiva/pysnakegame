@@ -6,7 +6,8 @@ from pathlib import Path
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
 os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 
-# Make "src.*" importable regardless of where pytest is invoked from.
+# Make "game_engine.*" and "game_src.*" importable regardless of where
+# pytest is invoked from.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import pygame
@@ -28,8 +29,8 @@ def _reset_singletons():
     GameStatus and GameBrief are app-wide singletons. Reset them before and
     after every test so state never leaks between tests.
     """
-    from src.game_engines.game_status import GameStatus
-    from src.game_engines.game_brief import GameBrief
+    from game_engine.game_status import GameStatus
+    from game_engine.game_brief import GameBrief
 
     GameStatus.reset_instance()
     GameBrief.reset_instance()
@@ -47,6 +48,6 @@ def screen():
 @pytest.fixture
 def game_bounds():
     """A representative play-area bounding box, matching Stage's own setup."""
-    from src.game_engines.bounding_box import RectBoundingBox
+    from game_engine.bounding_box import RectBoundingBox
 
     return RectBoundingBox(30, 100, 1070, 690)

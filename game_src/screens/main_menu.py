@@ -1,9 +1,9 @@
 import pygame
 from pygame import Surface, SurfaceType
 
-from src.game_components.button import Button
-from src.game_engines.game_status import GameStatus
-from src.game_engines.screen_game import ScreenGame
+from game_src.game_components.button import Button
+from game_engine.game_status import GameStatus
+from game_engine.screen_game import ScreenGame
 
 
 class MainMenu:
@@ -11,7 +11,7 @@ class MainMenu:
         self._screen = screen
         self._game_title = None
         self._title_position = (0, 0)
-        self._main_font = pygame.font.Font(r'./src/assets/fonts/roboto/Roboto-Black.ttf', 120)
+        self._main_font = pygame.font.Font(r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', 120)
         self._start_game_btn = Button(screen, 400, 400, "Start Game",on_click=self.__go_to_game)
         self._exit_game_game_btn = Button(screen, 500, 500, "Exit",on_click=self.__exit_game)
         self._game_status = GameStatus()

@@ -3,7 +3,7 @@ import sys
 import pygame
 from pygame import Surface, SurfaceType
 
-from src.screens.game_screens import GameScreen
+from game_src.screens.game_screens import GameScreen
 
 
 def fade_logo(screen, logo, logo_rect, duration=2000):
@@ -64,8 +64,8 @@ class SplashScreen(GameScreen):
         Setup Splash Screen.
         :return:
         """
-        self._logo = pygame.image.load(r'src/assets/images/logo/my_logo.png').convert_alpha()
-        intro_sound = pygame.mixer.Sound(r'./src/assets/sounds/effects/intro.mp3')
+        self._logo = pygame.image.load(r'game_src/assets/images/logo/my_logo.png').convert_alpha()
+        intro_sound = pygame.mixer.Sound(r'./game_src/assets/sounds/effects/intro.mp3')
         intro_sound.play()
         self.logo_rect = self._logo.get_rect(center=(self._screen.get_width() // 2, self._screen.get_height() // 2))
 

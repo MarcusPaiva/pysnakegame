@@ -1,6 +1,6 @@
 import pygame
 
-from src.game_engines.game_input import Keyboard, Keys
+from game_engine.game_input import Keyboard, Keys
 
 
 class _FakePressed(dict):

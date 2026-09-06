@@ -3,12 +3,12 @@ from datetime import datetime, timedelta
 import pygame
 from pygame import Surface, SurfaceType
 
-from src.game_engines.game_brief import GameBrief
-from src.game_engines.game_status import GameStatus
-from src.game_engines.screen_game import ScreenGame
-from src.screens.game_stage import Stage
-from src.screens.main_menu import MainMenu
-from src.utils.game_storage import GameBriefStorage
+from game_engine.game_brief import GameBrief
+from game_engine.game_status import GameStatus
+from game_engine.screen_game import ScreenGame
+from game_src.screens.game_stage import Stage
+from game_src.screens.main_menu import MainMenu
+from game_src.utils.game_storage import GameBriefStorage
 
 
 class GameManagement:

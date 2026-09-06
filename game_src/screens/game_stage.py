@@ -3,16 +3,16 @@ from datetime import datetime, timedelta
 import pygame
 from pygame import Surface, SurfaceType
 
-from src.GameObjects.player import Player
-from src.GameObjects.fruit import Fruit
-from src.game_components.modal import Modal, Options
-from src.game_engines.bounding_box import RectBoundingBox
-from src.game_engines.game_brief import GameBrief
-from src.game_engines.game_input import Keyboard, Keys
-from src.game_engines.game_status import GameStatus
-from src.game_engines.screen_game import ScreenGame
-from src.screens.game_screens import GameScreen
-from src.utils.game_collision import circle_collision_detections
+from game_src.GameObjects.player import Player
+from game_src.GameObjects.fruit import Fruit
+from game_src.game_components.modal import Modal, Options
+from game_engine.bounding_box import RectBoundingBox
+from game_engine.game_brief import GameBrief
+from game_engine.game_input import Keyboard, Keys
+from game_engine.game_status import GameStatus
+from game_engine.screen_game import ScreenGame
+from game_src.screens.game_screens import GameScreen
+from game_engine.game_collision import circle_collision_detections
 
 
 def detect_player_fruit_collision(player:Player, fruit:Fruit) -> bool:
@@ -51,15 +51,15 @@ class Stage(GameScreen):
         self._end_game = False
         pygame.font.init()
         pygame.mixer.init()
-        self._main_font = pygame.font.Font(r'./src/assets/fonts/roboto/Roboto-Black.ttf', 80)
-        self._header_font = pygame.font.Font(r'./src/assets/fonts/roboto/Roboto-Black.ttf', 80)
+        self._main_font = pygame.font.Font(r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', 80)
+        self._header_font = pygame.font.Font(r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', 80)
         self._paused_text = self._main_font.render('Paused', False, (255, 255, 255))
         self._points_text = self._main_font.render(f'Points {self._player.points}', False, (255, 255, 255))
         self._last_key_pressed = []
         self._game_brief = GameBrief()
         self._game_status = GameStatus()
         pygame.key.set_repeat(50,200)
-        pygame.mixer.music.load(r'./src/assets/sounds/music/main_song.mp3')
+        pygame.mixer.music.load(r'./game_src/assets/sounds/music/main_song.mp3')
         self._game_keyboard = Keyboard()
 
     def reset(self):
