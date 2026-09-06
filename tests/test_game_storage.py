@@ -1,4 +1,4 @@
-from game_engine.game_brief import GameBrief
+from game_src.game_brief import GameBrief
 from game_src.utils import game_storage
 from game_src.utils.game_storage import GameBriefStorage
 

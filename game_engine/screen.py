@@ -5,6 +5,7 @@ import pygame
 
 class SurfaceScreen:
     def __init__(self, width:int, height:int, title:str):
+        pygame.init()
         self.__screen = pygame.display.set_mode((width, height))
         pygame.display.set_caption(title)
         self._clock = pygame.time.Clock()
@@ -33,3 +34,7 @@ class SurfaceScreen:
 
     def get_screen(self):
         return self.__screen
+
+    def quit(self):
+        pygame.quit()
+        return self

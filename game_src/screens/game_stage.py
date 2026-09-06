@@ -4,12 +4,12 @@ from game_src.game_components.modal import Modal, Options
 from game_engine.bounding_box import RectBoundingBox
 from game_engine.font import GameFont
 from game_engine.game_artfacts_2d import Rect
-from game_engine.game_brief import GameBrief
+from game_src.game_brief import GameBrief
 from game_engine.inputs.game_input import Keyboard, Keys, set_reapeat
 from game_engine.screen import SurfaceScreen
 from game_engine.sound import Music
-from game_engine.game_status import GameStatus
-from game_engine.screen_game import ScreenGame
+from game_src.game_status import GameStatus
+from game_src.screen_game import ScreenGame
 from game_src.screens.game_screens import GameScreen
 from game_engine.game_collision import circle_collision_detections
 

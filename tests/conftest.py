@@ -29,8 +29,8 @@ def _reset_singletons():
     GameStatus and GameBrief are app-wide singletons. Reset them before and
     after every test so state never leaks between tests.
     """
-    from game_engine.game_status import GameStatus
-    from game_engine.game_brief import GameBrief
+    from game_src.game_status import GameStatus
+    from game_src.game_brief import GameBrief
 
     GameStatus.reset_instance()
     GameBrief.reset_instance()

@@ -2,10 +2,10 @@ from datetime import datetime, timedelta
 
 import pygame
 
-from game_engine.game_brief import GameBrief
-from game_engine.game_status import GameStatus
+from game_src.game_brief import GameBrief
+from game_src.game_status import GameStatus
 from game_engine.screen import SurfaceScreen
-from game_engine.screen_game import ScreenGame
+from game_src.screen_game import ScreenGame
 from game_src.screens.game_stage import Stage
 from game_src.screens.main_menu import MainMenu
 from game_src.utils.game_storage import GameBriefStorage

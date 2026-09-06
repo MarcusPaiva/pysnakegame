@@ -1,6 +1,6 @@
 import json
 
-from game_engine.game_brief import GameBrief
+from game_src.game_brief import GameBrief
 
 _GAME_BRIEF_FILE = "game_brief.storage"
 

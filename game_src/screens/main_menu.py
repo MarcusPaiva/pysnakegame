@@ -1,8 +1,8 @@
 from game_src.game_components.button import Button
 from game_engine.font import GameFont
 from game_engine.screen import SurfaceScreen
-from game_engine.game_status import GameStatus
-from game_engine.screen_game import ScreenGame
+from game_src.game_status import GameStatus
+from game_src.screen_game import ScreenGame
 
 
 class MainMenu:
