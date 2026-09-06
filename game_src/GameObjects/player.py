@@ -8,6 +8,7 @@ from pygame.rect import RectType, Rect
 from game_engine.GameObject import GameObject
 from game_engine.bounding_box import BoundingBox
 from game_engine.inputs.game_input import Keyboard, Keys
+from game_engine.inputs.sound import SoundEffect
 
 
 class Player(GameObject):
@@ -21,8 +22,7 @@ class Player(GameObject):
         self._sprite = None
         self._point = 1
         self._prev_points = [self._player_pos]
-        self._eat_effect = pygame.mixer.Sound(r'./game_src/assets/sounds/effects/eating.mp3')
-        self._eat_effect.set_volume(0.7)
+        self._eat_effect = SoundEffect(r'./game_src/assets/sounds/effects/eating.mp3').set_volume(0.7)
         self._prev_time = datetime.now()
         self._game_keyboard = Keyboard()
 
@@ -31,7 +31,7 @@ class Player(GameObject):
         return self._point
 
     def add_point(self):
-        self._eat_effect.play(0)
+        self._eat_effect.play()
         self._point += 1
         self._speed += self._speed * (self._point / 1000)
 

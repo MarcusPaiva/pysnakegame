@@ -7,6 +7,7 @@ from game_src.game_components.modal import Modal, Options
 from game_engine.bounding_box import RectBoundingBox
 from game_engine.game_brief import GameBrief
 from game_engine.inputs.game_input import Keyboard, Keys
+from game_engine.inputs.sound import Music
 from game_engine.game_status import GameStatus
 from game_engine.screen_game import ScreenGame
 from game_src.screens.game_screens import GameScreen
@@ -48,7 +49,6 @@ class Stage(GameScreen):
         self._collision = 0
         self._end_game = False
         pygame.font.init()
-        pygame.mixer.init()
         self._main_font = pygame.font.Font(r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', 80)
         self._header_font = pygame.font.Font(r'./game_src/assets/fonts/roboto/Roboto-Black.ttf', 80)
         self._paused_text = self._main_font.render('Paused', False, (255, 255, 255))
@@ -57,7 +57,7 @@ class Stage(GameScreen):
         self._game_brief = GameBrief()
         self._game_status = GameStatus()
         pygame.key.set_repeat(50,200)
-        pygame.mixer.music.load(r'./game_src/assets/sounds/music/main_song.mp3')
+        self._music = Music(r'./game_src/assets/sounds/music/main_song.mp3')
         self._game_keyboard = Keyboard()
 
     def reset(self):
@@ -83,8 +83,8 @@ class Stage(GameScreen):
         """
         self._player.points = 1
         self._fruit.generate()
-        pygame.mixer.music.play(-1, 0.0)
-        pygame.mixer.music.set_volume(0.3)
+        self._music.play_loop()
+        self._music.set_volume(0.3)
         self._modal_game_over.setup()
         self._modal_game_over.show(False)
         self.__setup_modal_game_over_options()
