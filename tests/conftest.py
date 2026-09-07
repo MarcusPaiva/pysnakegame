@@ -6,7 +6,7 @@ from pathlib import Path
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
 os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 
-# Make "game_engine.*" and "game_src.*" importable regardless of where
+# Make "light_game_engine.*" and "game_src.*" importable regardless of where
 # pytest is invoked from.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -26,17 +26,25 @@ def _pygame_session():
 @pytest.fixture(autouse=True)
 def _reset_singletons():
     """
-    GameStatus and GameBrief are app-wide singletons. Reset them before and
+    GameBrief (ours) and GameStatus/SceneManagement (from
+    light_game_engine) are app-wide singletons. Reset them before and
     after every test so state never leaks between tests.
-    """
-    from game_src.game_status import GameStatus
-    from game_src.game_brief import GameBrief
 
-    GameStatus.reset_instance()
+    light_game_engine's singletons don't expose a public reset hook, so
+    we clear their private _instance class attribute directly - the same
+    trick their own __new__ uses to create the singleton in the first
+    place.
+    """
+    from game_src.game_brief import GameBrief
+    from light_game_engine.scene.game_management import GameStatus, SceneManagement
+
     GameBrief.reset_instance()
+    GameStatus._instance = None
+    SceneManagement._instance = None
     yield
-    GameStatus.reset_instance()
     GameBrief.reset_instance()
+    GameStatus._instance = None
+    SceneManagement._instance = None
 
 
 @pytest.fixture
@@ -46,7 +54,7 @@ def screen():
     SurfaceScreen at the session's own size reuses pygame's single
     display surface rather than creating a new one.
     """
-    from game_engine.screen import SurfaceScreen
+    from light_game_engine.screen import SurfaceScreen
 
     return SurfaceScreen(1100, 720, "Test")
 
@@ -54,6 +62,6 @@ def screen():
 @pytest.fixture
 def game_bounds():
     """A representative play-area bounding box, matching Stage's own setup."""
-    from game_engine.bounding_box import RectBoundingBox
+    from light_game_engine.bounding_box import RectBoundingBox
 
     return RectBoundingBox(30, 100, 1070, 690)

@@ -1,7 +1,26 @@
 import pytest
 
-from game_engine.inputs.game_input import Keys
+from light_game_engine.inputs.game_input import Buttons, Keys
 from game_src.GameObjects.player import Player
+
+
+class _FakeJoystick:
+    """
+    A minimal InputModel-compatible double: exposes just what Alias
+    needs (user_is_pressing / get_user_interaction), without touching
+    real SDL controller hardware.
+    """
+
+    def __init__(self, pressed=()):
+        self._pressed = list(pressed)
+
+    @property
+    def user_is_pressing(self):
+        return len(self._pressed) > 0
+
+    @property
+    def get_user_interaction(self):
+        return self._pressed
 
 
 @pytest.fixture
@@ -72,3 +91,24 @@ def test_positions_history_is_capped_at_current_points(player):
         _move(player)
 
     assert len(player.positions) <= 3
+
+
+def test_joystick_dpad_moves_the_player(screen, game_bounds):
+    joystick = _FakeJoystick(pressed=[Buttons.dpad_right])
+    player = Player(screen, game_bounds, joystick=joystick)
+    # Bypass real keyboard polling, matching the `player` fixture above.
+    player._game_keyboard.detect_buttons = lambda: None
+
+    player._Player__control_event()
+
+    assert player._last_position == Keys.right
+
+
+def test_no_joystick_still_works_keyboard_only(screen, game_bounds):
+    """Player must work fine when no controller is connected (joystick=None)."""
+    player = Player(screen, game_bounds, joystick=None)
+    player._game_keyboard.detect_buttons = lambda: None
+
+    player._Player__control_event()  # should not raise
+
+    assert player._last_position == Keys.up  # unchanged, nothing was pressed

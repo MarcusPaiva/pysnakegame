@@ -1,10 +1,10 @@
 import random
 from typing import Optional
 
-from game_engine.GameObject import GameObject
-from game_engine.bounding_box import BoundingBox, CircleBoundingBox
-from game_engine.game_artfacts_2d import Circle
-from game_engine.screen import SurfaceScreen
+from light_game_engine.game_objects.GameObject import GameObject
+from light_game_engine.bounding_box import BoundingBox, CircleBoundingBox
+from light_game_engine.game_artfacts_2d import Circle
+from light_game_engine.screen import SurfaceScreen
 
 
 class Fruit(GameObject):
@@ -41,4 +41,3 @@ class Fruit(GameObject):
 
     def draw(self):
         self._sprite = Circle(self._position.center_x, self._position.center_y, self._radius).set_fill_color("green").render(self._screen)
-

@@ -1,6 +1,6 @@
 from types import SimpleNamespace
 
-from game_engine.bounding_box import CircleBoundingBox
+from light_game_engine.bounding_box import CircleBoundingBox
 from game_src.screens.game_stage import detect_player_fruit_collision, self_collision
 
 

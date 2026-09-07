@@ -1,16 +1,17 @@
 from datetime import datetime, timedelta
 from typing import List, Optional
 
-from game_engine.GameObject import GameObject
-from game_engine.bounding_box import BoundingBox, CircleBoundingBox
-from game_engine.game_artfacts_2d import Circle
-from game_engine.inputs.game_input import Keyboard, Keys
-from game_engine.screen import SurfaceScreen
-from game_engine.sound import SoundEffect
+from light_game_engine.game_objects.GameObject import GameObject
+from light_game_engine.bounding_box import BoundingBox, CircleBoundingBox
+from light_game_engine.game_artfacts_2d import Circle
+from light_game_engine.inputs.alias import Alias
+from light_game_engine.inputs.game_input import Buttons, Joystick, Keyboard, Keys
+from light_game_engine.screen import SurfaceScreen
+from light_game_engine.sound import SoundEffect
 
 
 class Player(GameObject):
-    def __init__(self, screen:SurfaceScreen, game_bounds:BoundingBox):
+    def __init__(self, screen:SurfaceScreen, game_bounds:BoundingBox, joystick:Optional[Joystick] = None):
         self._screen = screen
         self._bounds = game_bounds
         self._speed = 3
@@ -23,6 +24,13 @@ class Player(GameObject):
         self._eat_effect = SoundEffect(r'./game_src/assets/sounds/effects/eating.mp3').set_volume(0.7)
         self._prev_time = datetime.now()
         self._game_keyboard = Keyboard()
+        self._alias = Alias().add_input(self._game_keyboard)
+        if joystick is not None:
+            self._alias.add_input(joystick)
+        self._alias.add_alias("move_up", Keys.key_up).add_alias("move_up", Buttons.dpad_up)
+        self._alias.add_alias("move_down", Keys.key_down).add_alias("move_down", Buttons.dpad_down)
+        self._alias.add_alias("move_left", Keys.key_left).add_alias("move_left", Buttons.dpad_left)
+        self._alias.add_alias("move_right", Keys.key_right).add_alias("move_right", Buttons.dpad_right)
 
     @property
     def points(self):
@@ -56,14 +64,14 @@ class Player(GameObject):
 
     def __control_event(self):
         self._game_keyboard.detect_buttons()
-        keys = self._game_keyboard.current_keys_pressing
-        if Keys.key_up in keys and not self._last_position == Keys.up:
+        triggered = self._alias.get_alias_triggered()
+        if "move_up" in triggered and not self._last_position == Keys.up:
             self._last_position = Keys.up
-        if Keys.key_down in keys and not self._last_position == Keys.down:
+        if "move_down" in triggered and not self._last_position == Keys.down:
             self._last_position = Keys.down
-        if Keys.key_left in keys and not self._last_position == Keys.left:
+        if "move_left" in triggered and not self._last_position == Keys.left:
             self._last_position = Keys.left
-        if Keys.key_right in keys and not self._last_position == Keys.right:
+        if "move_right" in triggered and not self._last_position == Keys.right:
             self._last_position = Keys.right
 
     def __move(self):
