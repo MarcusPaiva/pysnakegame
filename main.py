@@ -1,4 +1,4 @@
-from light_game_engine.inputs.game_input import Joystick
+from light_game_engine.inputs.game_input import Joystick, list_connected_joysticks
 from light_game_engine.scene.SplashScreen import SplashScreen
 from light_game_engine.scene.game_management import GameManagement, SceneManagement
 from light_game_engine.screen import SurfaceScreen
