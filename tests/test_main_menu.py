@@ -2,6 +2,7 @@ import pytest
 
 from light_game_engine.inputs.game_input import Buttons
 from light_game_engine.scene.game_management import GameStatus, SceneManagement
+from game_src.screens import main_menu as main_menu_module
 from game_src.screens.main_menu import MainMenu
 
 
@@ -82,3 +83,35 @@ def test_joystick_dpad_moves_focus_between_buttons(screen):
     joystick.press_once(Buttons.dpad_up)
     menu._process()
     assert menu._focused_index == 0
+
+
+def test_reset_ignores_a_click_still_held_from_before_this_scene_was_active(screen, monkeypatch):
+    """
+    Regression test: a real mouse click spans more than one 60fps
+    frame, and Button fires on_click() every frame it's held, not just
+    once per press. A click used to switch INTO this scene (e.g. the
+    Game Over modal's "Main Menu" option, which can overlap Exit's box)
+    used to "leak" straight into Exit on the very next frame.
+    """
+    menu = MainMenu(screen)
+    menu.setup()
+    menu.reset()  # simulate SceneManagement activating this scene mid-click
+
+    monkeypatch.setattr(main_menu_module, "mouse_click_detection", lambda: (1, 1))  # still held
+    menu._process()
+    assert menu._exit_game_game_btn._disable is True
+
+    monkeypatch.setattr(main_menu_module, "mouse_click_detection", lambda: None)  # released
+    menu._process()
+    assert menu._exit_game_game_btn._disable is False
+
+
+def test_exit_click_still_works_normally_after_input_is_armed(screen, monkeypatch):
+    menu = MainMenu(screen)
+    menu.setup()
+    assert menu._input_armed is True  # fresh menu, never reset() mid-click
+
+    monkeypatch.setattr(main_menu_module, "mouse_click_detection", lambda: (1, 1))
+    menu._process()
+
+    assert menu._exit_game_game_btn._disable is False

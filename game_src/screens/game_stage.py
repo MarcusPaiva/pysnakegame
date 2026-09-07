@@ -106,6 +106,7 @@ class Stage(GameScene):
         self._player = Player(self._screen, self._game_bounds, self._joystick)
         self._fruit = Fruit(self._screen, self._game_bounds)
         SceneManagement().set_current_scene("main_menu")
+        SceneManagement().reset_current_scene()
 
     def __setup_modal_game_over_options(self):
         options = [
