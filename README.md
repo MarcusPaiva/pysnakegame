@@ -1,6 +1,8 @@
 # pySnakeGame
 This repository is intended for study in game development and study of software architecture.
 
+This project also serves as a sample/example codebase demonstrating usage of the [LightGameEngine](https://github.com/MarcusPaiva/LightGameEngine) library (published on [PyPI](https://pypi.org/project/LightGameEngine/)).
+
 ![pySnakeGame in game capture](docs/in_game_capture.jpg)
 
 ## Install
